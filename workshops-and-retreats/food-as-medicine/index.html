@@ -656,51 +656,59 @@ footer .fcredit{max-width:none; font-size:1.125rem}
 .rf-badge:hover{transform:scale(1.03)}
 
 /* ---- footer: menu, address with the newsletter, and the message form ---- */
-.rf-footer{position:relative; height:calc(725 * var(--u)); background:var(--slate); color:var(--cream); --focus:var(--cream)}
-.rf-footer h6{margin:0; font:400 calc(22 * var(--u))/calc(26 * var(--u)) 'Syne',var(--ff-label); text-transform:uppercase}
-.rf-col{position:absolute}
-.rf-col-menu{left:calc(47 * var(--u)); top:calc(47 * var(--u)); width:calc(412 * var(--u))}
-.rf-col-menu h6{margin-left:calc(2 * var(--u))}
-.rf-fmenu{margin:calc(43 * var(--u)) 0 0; padding:0; list-style:none}
-.rf-fmenu > li{min-height:calc(35 * var(--u))}
-.rf-fmenu > li > a, .rf-fmenu .rf-label{font:300 calc(14 * var(--u))/calc(19 * var(--u)) 'Avenir','Nunito Sans',system-ui,sans-serif; color:var(--cream); text-transform:uppercase; text-decoration:none}
-.rf-fmenu .rf-chev{display:inline-grid; width:calc(12 * var(--u)); height:calc(12 * var(--u)); margin-left:calc(20 * var(--u)); vertical-align:calc(1 * var(--u))}
-.rf-fmenu .rf-sub{display:none; margin:calc(8 * var(--u)) 0 calc(10 * var(--u)); padding:0; list-style:none}
+.rf-footer{position:relative; display:grid; grid-template-columns:100%; padding:0; border:0; background:var(--slate); color:var(--cream); --focus:var(--cream)}
+/* Every piece shares one grid cell and is placed by its margins, the way Wix positions
+   them; the footer is as tall as its longest piece, so the newsletter text can wrap.
+   Headings, the menu and the address scale with the canvas; the form fields, their
+   text and the buttons keep a fixed pixel size, as on restoreny.org. */
+.rf-col{display:contents}
+.rf-col > *, .rf-social{grid-area:1 / 1; align-self:start; justify-self:start; margin:0}
+.rf-footer h6{font:400 calc(22 * var(--u))/calc(26.4 * var(--u)) 'Syne',var(--ff-label); text-transform:uppercase; white-space:nowrap}
+.rf-col > h6{margin-top:calc(1.1px + 46.4 * var(--u))}
+.rf-col-menu > h6{margin-left:calc(48.7 * var(--u))}
+.rf-col-address > h6{margin-left:calc(458.9 * var(--u))}
+.rf-col-message > h6{margin-left:calc(930 * var(--u))}
+.rf-col > h6.rf-news-title{margin-top:calc(1.1px + 330 * var(--u))}
+
+.rf-col > .rf-fmenu{margin:calc(1.2px + 118.6 * var(--u)) 0 0 calc(46.8 * var(--u)); padding:0; list-style:none}
+.rf-fmenu > li{display:flex; flex-wrap:wrap; align-items:flex-start; min-height:calc(13px + 22.2 * var(--u))}
+.rf-fmenu > li > a, .rf-fmenu .rf-label{display:block; font:300 calc(14 * var(--u))/calc(19.2 * var(--u)) 'Avenir','Nunito Sans',system-ui,sans-serif; color:var(--cream); text-transform:uppercase; text-decoration:none}
+.rf-fmenu .rf-chev{display:inline-grid; width:calc(12 * var(--u)); height:calc(12 * var(--u)); margin:calc(3.6 * var(--u)) 0 0 calc(20 * var(--u))}
+.rf-fmenu .rf-sub{display:none; flex-basis:100%; margin:calc(8 * var(--u)) 0 calc(10 * var(--u)); padding:0; list-style:none}
 .rf-fmenu .has-sub.open .rf-sub{display:grid; gap:calc(12 * var(--u))}
 .rf-fmenu .rf-sub a{font:300 calc(12 * var(--u))/calc(17 * var(--u)) 'Avenir','Nunito Sans',system-ui,sans-serif; color:var(--rf-sub); text-transform:uppercase; text-decoration:none}
 .rf-fmenu a:hover{text-decoration:underline; text-underline-offset:0.25em}
 
-.rf-col-address{left:calc(459 * var(--u)); top:calc(47 * var(--u)); width:calc(300 * var(--u))}
-.rf-address{margin:calc(45 * var(--u)) 0 0 calc(2 * var(--u)); width:calc(233 * var(--u)); font:300 calc(18 * var(--u))/1.3 'Avenir','Nunito Sans',system-ui,sans-serif}
+.rf-col > .rf-address{margin:calc(1.2px + 116.6 * var(--u)) 0 0 calc(460.9 * var(--u)); width:calc(233 * var(--u)); font:300 calc(18 * var(--u))/1.3 'Avenir','Nunito Sans',system-ui,sans-serif}
+.rf-footer .rf-address{max-width:none}
 .rf-address a{text-decoration:none}
-.rf-news-title{position:absolute; top:calc(284 * var(--u)); left:0; white-space:nowrap}
-.rf-news{position:absolute; top:calc(358 * var(--u)); left:calc(-4 * var(--u)); width:calc(270 * var(--u))}
+
+.rf-col > .rf-news{display:flex; flex-direction:column; align-items:flex-start; width:calc(273 * var(--u) - 19.8px); margin:calc(61px + 343.6 * var(--u)) 0 calc(59.75px + 69.7 * var(--u)) calc(4px + 451 * var(--u))}
 .rf-line{
-  display:block; width:100%; height:calc(39 * var(--u)); margin:0; padding:0 calc(12 * var(--u)); border:0; border-bottom:1px solid var(--cream);
-  background:transparent; color:var(--cream); font:300 calc(18 * var(--u))/1 'Avenir','Nunito Sans',system-ui,sans-serif; border-radius:0;
+  display:block; width:100%; height:39.4px; margin:0; padding:0 12px; border:0; border-bottom:1px solid var(--cream);
+  background:transparent; color:var(--cream); font:300 18px/1 'Avenir','Nunito Sans',system-ui,sans-serif; border-radius:0;
 }
 .rf-line::placeholder{color:var(--cream); opacity:1}
-.rf-news .rf-line{width:calc(253 * var(--u))}
-.rf-check{display:grid; grid-template-columns:calc(16 * var(--u)) 1fr; column-gap:calc(12 * var(--u)); align-items:center; margin-top:calc(25 * var(--u)); font:300 calc(18 * var(--u))/calc(27 * var(--u)) 'Avenir','Nunito Sans',system-ui,sans-serif; cursor:pointer}
-.rf-check input{appearance:none; width:calc(16 * var(--u)); height:calc(16 * var(--u)); margin:0; border:1px solid var(--cream); background:transparent; cursor:pointer}
+.rf-check{display:grid; grid-template-columns:16px auto; column-gap:12px; align-items:center; margin-top:24.75px; font:300 18px/27px 'Avenir','Nunito Sans',system-ui,sans-serif; cursor:pointer}
+.rf-check input{appearance:none; width:16px; height:16px; margin:0; border:1px solid var(--cream); background:transparent; cursor:pointer}
 .rf-check input:checked{background:var(--cream)}
 .rf-pill{
-  display:inline-flex; align-items:center; justify-content:center; height:calc(48 * var(--u)); padding:0;
+  display:inline-flex; align-items:center; justify-content:center; height:48px; padding:0;
   border:1px solid var(--cream); border-radius:100px; background:transparent; color:var(--cream);
-  font:300 calc(20 * var(--u))/1 'Avenir','Nunito Sans',system-ui,sans-serif; cursor:pointer; transition:background .25s ease, color .25s ease;
+  font:300 20px/1 'Avenir','Nunito Sans',system-ui,sans-serif; cursor:pointer; transition:background .25s ease, color .25s ease;
 }
 .rf-pill:hover{background:var(--cream); color:var(--slate)}
-.rf-news .rf-pill{width:calc(193 * var(--u)); margin:calc(24 * var(--u)) 0 0 calc(36 * var(--u))}
+.rf-news .rf-pill{width:calc(204.8 * var(--u) - 11.9px); margin:24.25px 0 0 calc(1.9px + 34.2 * var(--u))}
 
-.rf-col-message{left:calc(930 * var(--u)); top:calc(47 * var(--u)); width:calc(310 * var(--u))}
-.rf-form{margin:calc(41 * var(--u)) 0 0 calc(10 * var(--u)); width:calc(290 * var(--u))}
-.rf-form label{display:block; font:300 calc(18 * var(--u))/calc(23 * var(--u)) 'Avenir','Nunito Sans',system-ui,sans-serif}
-.rf-form .rf-line{width:calc(278 * var(--u)); margin:calc(9 * var(--u)) 0 calc(25 * var(--u)); padding:0}
-.rf-form textarea.rf-line{width:calc(290 * var(--u)); height:calc(75 * var(--u)); margin:calc(16 * var(--u)) 0 0; resize:none; padding-top:calc(6 * var(--u))}
-.rf-form .rf-pill{width:calc(212 * var(--u)); margin-top:calc(33 * var(--u)); background:var(--slate)}
+.rf-col > .rf-form{width:max(264px, calc(338.2 * var(--u) - 48px)); margin:calc(24.9px + 89.4 * var(--u)) 0 calc(24px + 75.5 * var(--u)) calc(23.9px + 916.4 * var(--u))}
+.rf-form label{display:block; font:300 18px/23.4px 'Avenir','Nunito Sans',system-ui,sans-serif}
+.rf-form .rf-line{width:calc(100% - 12px); margin:8px 0 25px; padding:0}
+.rf-form textarea.rf-line{width:100%; height:75px; margin:16px 0 0; resize:none; padding-top:6px}
+.rf-form .rf-pill{width:max(192px, calc(253.6 * var(--u) - 42px)); margin-top:33px; background:var(--slate)}
 .rf-form .rf-pill:hover{background:var(--cream); color:var(--slate)}
 
-.rf-social{position:absolute; left:calc(1028 * var(--u)); top:calc(649 * var(--u)); display:flex; gap:calc(12 * var(--u)); margin:0; padding:0; list-style:none}
+/* the icons hang from the bottom of the footer */
+.rf-social{align-self:end; display:flex; gap:12px; margin:0 0 calc(45.5 * var(--u)) calc(1075.8 * var(--u) - 48px); padding:0; list-style:none}
 .rf-social a{display:grid; place-items:center; width:calc(30 * var(--u)); height:calc(30 * var(--u)); border-radius:50%; background:var(--cream); color:var(--slate)}
 .rf-social svg{width:62%; height:62%; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linejoin:round}
 .rf-social svg .fill{fill:currentColor; stroke:none}
@@ -733,38 +741,40 @@ footer .fcredit{max-width:none; font-size:1.125rem}
   .rf-menu .rf-sub a{font-size:calc(12 * var(--m)); color:var(--rf-sub)}
   html.rf-menu-open{overflow:hidden}
 
-  .rf-footer{height:calc(1660 * var(--m))}
-  .rf-footer h6{font-size:calc(15 * var(--m)); line-height:calc(18 * var(--m))}
-  .rf-col-menu{left:calc(20 * var(--m)); top:calc(48 * var(--m)); width:calc(280 * var(--m))}
-  .rf-col-menu h6{margin-left:0}
-  .rf-fmenu{margin:calc(33 * var(--m)) 0 0 calc(8 * var(--m))}
-  .rf-fmenu > li{min-height:calc(39.5 * var(--m))}
-  .rf-fmenu > li > a, .rf-fmenu .rf-label{font-size:calc(12 * var(--m)); line-height:calc(16 * var(--m))}
-  .rf-fmenu .rf-chev{width:calc(12 * var(--m)); height:calc(12 * var(--m)); margin-left:calc(41 * var(--m))}
+  /* Wix stacks the footer on its 320px canvas: headings, menu, address and icons scale
+     (--m, growing up to 700px), the form fields and buttons stay in pixels, and the
+     pieces spread across the window (--s). Its order: menu, both form headings, the
+     message form, the address, the icons, then the newsletter field. */
+  .rf-footer{--s:calc(100vw / 320)}
+  .rf-footer h6{font-size:calc(14.77 * var(--m)); line-height:calc(17.7 * var(--m))}
+  .rf-col-menu > h6, .rf-col-address > h6, .rf-col-message > h6{margin-left:calc(19.7 * var(--s))}
+  .rf-col-menu > h6{margin-top:calc(1.05px + 44.55 * var(--m))}
+  .rf-col-message > h6{margin-top:calc(93.08px + 369.52 * var(--m))}
+  .rf-col-address > h6{margin-top:calc(623.84px + 441.26 * var(--m))}
+  .rf-col > h6.rf-news-title{margin-top:calc(92.97px + 341.73 * var(--m))}
+
+  .rf-col > .rf-fmenu{margin:calc(0.93px + 86.57 * var(--m)) 0 0 calc(19.7 * var(--s) + 8.2 * var(--m))}
+  .rf-fmenu > li{min-height:calc(12.99px + 26.42 * var(--m))}
+  .rf-fmenu > li > a, .rf-fmenu .rf-label{font-size:calc(11.48 * var(--m)); line-height:calc(0.91px + 14.99 * var(--m))}
+  .rf-fmenu .rf-chev{width:calc(12 * var(--m)); height:calc(12 * var(--m)); margin:calc(2 * var(--m)) 0 0 calc(41 * var(--m))}
   .rf-fmenu .rf-sub a{font-size:calc(11 * var(--m)); line-height:calc(15 * var(--m))}
   .rf-fmenu .rf-sub{margin:calc(8 * var(--m)) 0 calc(6 * var(--m))}
   .rf-fmenu .has-sub.open .rf-sub{gap:calc(10 * var(--m))}
 
-  /* Wix stacks these in its own order: the two form headings, the form, the address,
-     the social icons, and the newsletter field last */
-  .rf-col-address, .rf-col-message{position:static}
-  .rf-news-title{top:calc(437 * var(--m)); left:calc(20 * var(--m))}
-  .rf-col-message h6{position:absolute; top:calc(465.5 * var(--m)); left:calc(20 * var(--m))}
-  .rf-form{position:absolute; top:calc(504 * var(--m)); left:calc(44 * var(--m)); width:calc(263.5 * var(--m)); margin:0}
-  .rf-form label{font-size:calc(20 * var(--m)); line-height:calc(26 * var(--m))}
-  .rf-form .rf-line{width:100%; height:calc(38 * var(--m)); margin:calc(3 * var(--m)) 0 calc(28 * var(--m)); font-size:calc(20 * var(--m))}
-  .rf-form textarea.rf-line{width:100%; height:calc(95 * var(--m)); margin:calc(3 * var(--m)) 0 0}
-  .rf-form .rf-pill{width:calc(191 * var(--m)); height:calc(47 * var(--m)); margin-top:calc(25 * var(--m)); font-size:calc(22 * var(--m))}
-  .rf-col-address h6{position:absolute; top:calc(1068 * var(--m)); left:calc(20 * var(--m))}
-  .rf-address{position:absolute; top:calc(1108 * var(--m)); left:calc(20 * var(--m)); width:calc(280 * var(--m)); margin:0; font-size:calc(13 * var(--m)); line-height:calc(17.5 * var(--m))}
+  .rf-col > .rf-form{width:calc(100% - 39.4 * var(--s) - 48px); margin:calc(116.91px + 402.19 * var(--m)) 0 0 calc(19.7 * var(--s) + 24px)}
+  .rf-form .rf-pill{width:100%}
+  .rf-col > .rf-address{width:calc(100% - 39.4 * var(--s)); margin:calc(623.83px + 485.47 * var(--m)) 0 0 calc(19.7 * var(--s)); font-size:calc(13.13 * var(--m))}
   .rf-address .rf-wrap{display:none}
-  .rf-social{left:calc(20 * var(--m)); top:calc(1258 * var(--m)); gap:calc(12.5 * var(--m))}
-  .rf-social a{width:calc(24 * var(--m)); height:calc(24 * var(--m))}
-  .rf-news{top:calc(1356 * var(--m)); left:calc(105.5 * var(--m)); width:calc(168 * var(--m))}
-  .rf-news .rf-line{width:100%; height:calc(39 * var(--m)); padding:0 0 0 calc(13 * var(--m)); font-size:calc(18 * var(--m))}
-  .rf-check{grid-template-columns:calc(16 * var(--m)) calc(134 * var(--m)); column-gap:calc(12.5 * var(--m)); margin-top:calc(31 * var(--m)); font-size:calc(18 * var(--m)); line-height:calc(27 * var(--m))}
-  .rf-check input{width:calc(16 * var(--m)); height:calc(16 * var(--m))}
-  .rf-news .rf-pill{width:calc(119 * var(--m)); height:calc(47 * var(--m)); margin:calc(21 * var(--m)) 0 0 calc(24.5 * var(--m)); font-size:calc(22 * var(--m))}
+  .rf-social{align-self:start; margin:calc(623.83px + 633.57 * var(--m)) 0 0 calc(19.7 * var(--s))}
+  .rf-social a{width:calc(24.6 * var(--m)); height:calc(24.6 * var(--m))}
+  .rf-col > .rf-news{width:calc(100% - 39.4 * var(--s) - 88px); margin:calc(663.87px + 691.03 * var(--m)) 0 calc(39.96px + 32.84 * var(--m)) calc(19.7 * var(--s) + 38px)}
+  .rf-news .rf-pill{width:calc(100% + 12px); margin-left:0}
+}
+/* From 751px Wix narrows the Submit button and centres the newsletter block a little. */
+@media (min-width:751px) and (max-width:1023px){
+  .rf-form .rf-pill{width:calc(65.8vw - 42.2px)}
+  .rf-col > .rf-news{width:calc(58.45vw - 70.5px); margin-left:calc(20.75vw + 29.5px)}
+  .rf-news .rf-pill{width:calc(43.85vw - 50px); margin-left:calc(7.35vw - 4.7px)}
 }
 /* Between 700 and 1024px Wix keeps heights and type at their 700px size, but spreads the
    logo, Donate and menu button across the wider window (measured at 700, 750, 768, 1000). */
