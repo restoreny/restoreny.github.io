@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Immersive Farming — Restore Forward</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#59637E">
+<script>
+  try{ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){ document.documentElement.classList.add('anim'); } }catch(e){}
+</script>
+<link rel="preload" href="../../fonts/cormorant-garamond.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../fonts/wix-madefor-display.woff2" as="font" type="font/woff2" crossorigin>
+<!-- Syne is the face of restoreny.org's footer headings. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400&display=swap" rel="stylesheet">
+<!-- A review copy of Restore Forward's "Immersive Farming" page, rebuilt on the farahtanis.com
+     style inside Restore Forward's own header and footer. Page copy is the original's,
+     word for word; the original file is untouched. Photographs are placeholders from
+     the farahtanis.com set. The site CSS below is a copy from farahtanis.com's index.html:
+     refresh it with python3 project/tools/refresh-site-css.py -->
+<style>
+/* site-css:start */
+/* Fonts are served from this site: Google Fonts would see every visitor's address,
+   which sits badly on a page about illness. Latin subsets, swapped in as they load. */
+/* fonts:start */
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:300;font-display:swap;src:url(../../fonts/cormorant-garamond-italic.woff2) format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300 400;font-display:swap;src:url(../../fonts/cormorant-garamond.woff2) format('woff2')}
+@font-face{font-family:'Wix Madefor Display';font-style:normal;font-weight:400 500;font-display:swap;src:url(../../fonts/wix-madefor-display.woff2) format('woff2')}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:300 500;font-display:swap;src:url(../../fonts/nunito-sans.woff2) format('woff2')}
+/* fonts:end */
+/* Restore Forward's look (restoreny.org), so this page and the non-profit it
+   supports read as one family. Colours are sampled from that site's own pixels.
+   Its sizes are drawn on a 1280px-wide canvas and scale with the window, so the
+   display sizes here do the same; running text stays put for readability. */
+:root{
+  --cream:#FFFBF0; --slate:#59637E; --blue-gray:#7C859E; --navy:#0C1A2E; --peach:#FFC58E;
+  /* Text, hairlines and focus rings take the ink of whatever band they sit on. */
+  --ink:var(--slate); --line:var(--slate); --focus:var(--navy);
+  --ff-display:'Cormorant Garamond',Georgia,serif;
+  /* Avenir is Restore Forward's body face. It is a paid font: Apple devices have it
+     built in, and everyone else gets Nunito Sans, its closest free match. */
+  --ff-body:'Avenir','Nunito Sans',system-ui,-apple-system,sans-serif;
+  --ff-label:'Wix Madefor Display','Nunito Sans',system-ui,sans-serif;
+  /* Restore Forward's text styles at 1280px: H1 143, H2 110, H3 43, H5 24, H6 22. */
+  --t-h1:clamp(2.6rem,11.2vw,8.94rem);
+  --t-h2:clamp(2.1rem,8.6vw,8.6rem);
+  --t-h3:clamp(1.75rem,3.36vw,2.7rem);
+  --t-quote:clamp(1.9rem,3.9vw,3.2rem);
+  --t-stat:clamp(2.5rem,7.2vw,5.75rem);   /* stays well under the title on phones */
+  --t-h5:clamp(1.25rem,1.875vw,1.6rem);
+  --t-h6:clamp(1rem,1.72vw,1.375rem);
+  /* Below body (18px) there are two steps only: small text and small capitals. */
+  --t-small:0.9375rem;  /* 15px */
+  --t-caps:0.8125rem;   /* 13px */
+  --gutter:clamp(1.1rem,1.6vw,1.6rem);
+  --band-end:clamp(2.75rem,5.5vw,4.4rem);
+  --top-band:clamp(5.75rem,10.6vw,8.5rem);
+  --bar:clamp(3.4rem,5.5vw,4.4rem);           /* the menu bar inside the top band */
+  --title-top:clamp(1.25rem,2vw,1.6rem);
+  --rule-gap:clamp(1rem,2.2vw,1.75rem);
+  --col-pad:clamp(1.5rem,2.5vw,2rem);       /* space either side of a column rule */
+  --after-rule:clamp(1.6rem,2.3vw,1.85rem); /* rule to the first line under it */
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box}
+:focus-visible{outline:2px solid var(--focus); outline-offset:3px}
+body{
+  margin:0; background:var(--cream); color:var(--ink);
+  font:300 1.125rem/1.3 var(--ff-body);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,p,ul,dl,dd,figure{margin:0}
+a{color:inherit}
+/* Restore Forward sets nothing in bold; emphasis is one step heavier, no more. */
+strong{font-weight:500}
+
+/* ---------- bands ----------------------------------------------------------
+   Full-bleed and left-aligned on a narrow gutter, the way Restore Forward is.
+   Cream, slate and blue-gray bands alternate, so no two neighbours share a colour
+   and no line is needed to tell them apart. A hairline has two jobs only: the
+   full-width rule under the page title, and the vertical rule between columns.
+   Everything else is separated by space. Paragraph text never sits on the lighter
+   blue-gray; only large type does, which reads fine there. */
+.band{padding:0 var(--gutter) var(--band-end); color:var(--ink)}
+.band-slate{background:var(--slate); --ink:var(--cream); --line:var(--cream); --focus:var(--cream)}
+.band-blue{background:var(--blue-gray); --ink:var(--cream); --line:var(--cream); --focus:var(--cream)}
+
+/* Two big moments only: the page title and the letter's. Everything else is a
+   quiet heading, as on Restore Forward's inner pages. */
+.title{
+  padding-top:var(--title-top);
+  font:300 var(--t-h2)/0.85 var(--ff-display);
+  text-transform:uppercase; text-wrap:balance;
+}
+.title-h1{font-size:var(--t-h1); line-height:1}
+.title-mixed{text-transform:none; line-height:0.95}
+.rule{height:1px; margin:var(--rule-gap) calc(-1 * var(--gutter)) 0; border:0; background:var(--line)}
+
+/* The grid is always the last thing in a band. It reaches down into the band's bottom
+   padding and the columns carry that padding themselves, so their rules run all the
+   way to the band's edge, as on Restore Forward. */
+.grid3{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); margin:0 calc(-1 * var(--gutter)) calc(-1 * var(--band-end))}
+.grid3 > *{padding:var(--after-rule) var(--col-pad) var(--band-end); border-left:1px solid var(--line)}
+.grid3 > :first-child{border-left:0; padding-left:var(--gutter)}
+.span2{grid-column:span 2}
+
+.heading{margin-top:1rem; font:300 var(--t-h3)/1.1 var(--ff-display); color:var(--blue-gray); text-wrap:balance}
+.title + .heading{margin-top:clamp(0.8rem,1.6vw,1.4rem)}   /* a subtitle under its title, as on Restore Forward */
+.heading + .rule{margin-top:calc(var(--rule-gap) - clamp(0.5rem,1.25vw,1rem))}
+.band-slate .heading, .band-blue .heading{color:inherit}
+
+.prose > * + *{margin-top:1.3em}   /* one blank line */
+.prose p{max-width:36em}
+.lede{font-size:1.25rem; line-height:1.3}
+.pull{margin-block:1.6rem; font:300 var(--t-quote)/1.12 var(--ff-display); text-wrap:balance}
+.prose .pull{max-width:17em}
+
+/* ---------- buttons: full pills, sentence case, Avenir Light ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-height:2.7rem; padding:0.55rem 1.5rem;
+  font:300 1.125rem/1.2 var(--ff-body); text-align:center; text-decoration:none;
+  border:1px solid transparent; border-radius:999px; cursor:pointer;
+  transition:background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+}
+.btn-primary{background:var(--navy); color:var(--cream)}
+.btn-primary:hover{background:var(--slate)}
+.btn-ghost{background:transparent; color:var(--navy); border-color:var(--navy)}
+.btn-ghost:hover{background:var(--navy); color:var(--cream)}
+.band-slate .btn-primary{background:var(--cream); color:var(--slate); border-color:var(--cream)}
+.band-slate .btn-primary:hover{background:transparent; color:var(--cream)}
+.btn-lg{min-height:clamp(2.9rem,5.3vw,4.25rem); min-width:clamp(13rem,21.4vw,17rem)}
+.cta-row{display:flex; flex-wrap:wrap; gap:0.9rem; margin-top:1.8rem}
+
+/* ---------- top band ---------- */
+.site-top{
+  min-height:var(--top-band); padding:0 var(--gutter);
+  background:var(--slate); color:var(--cream); --focus:var(--cream);
+}
+.topbar{position:relative; display:flex; align-items:center; gap:1.5rem 2.5rem; min-height:var(--bar)}
+/* Once the page has scrolled past the top band, the menu bar steps out of the way on
+   the way down and comes back the moment a reader scrolls up. It keeps its place in
+   the band (the band's own height holds it), so nothing on the page moves. */
+.site-top.is-pinned .topbar{position:fixed; top:0; left:0; right:0; z-index:30; padding:0 var(--gutter); background:var(--slate); transform:translateY(-100%)}
+.site-top.is-pinned.is-shown .topbar{transform:none}
+/* With the bar back, the badge returns to its full size and hangs across the bar's
+   lower edge, the way it first hangs across the top band. */
+.site-top.is-pinned.is-shown + .badge.is-compact{top:calc(var(--bar) - clamp(6.2rem,11.9vw,9.5rem) * 0.375); width:clamp(6.2rem,11.9vw,9.5rem); font-size:clamp(1.05rem,1.875vw,1.5rem)}
+/* The lockup mirrors "Restore Forward | The Reconciliation Center". */
+/* A two-line lockup, like Restore Forward's: her name at body size, her role small
+   beneath it. As one compact block it reads as a name, and the menu beside it as a menu. */
+.brand{display:flex; flex-direction:column; align-items:flex-start; gap:0.3rem; font:500 1.125rem/1.05 var(--ff-label); text-decoration:none; white-space:nowrap}
+.brand-sub{font:400 var(--t-caps)/1.1 var(--ff-label); opacity:.85}
+/* The menu follows the lockup after a clear gap, on the same line as her name. */
+.topnav{margin-left:clamp(1rem,3vw,2.5rem)}
+.topbar{align-items:center}
+@media (min-width:901px) and (max-width:999px){ .brand-sub{display:none} .topbar .topnav ul{column-gap:0.85rem} }   /* on the narrowest laptops only her name and a tighter menu, so all six items stay clear of the badge */
+.topnav ul{display:flex; flex-wrap:wrap; gap:0.6rem clamp(1rem,1.6vw,1.6rem); margin:0; padding:0; list-style:none}
+.topnav a{font:300 var(--t-caps)/1 var(--ff-body); text-transform:uppercase; text-decoration:none}
+.topnav a:hover, .topnav a[aria-current="true"], .topnav a[aria-current="page"]{text-decoration:underline; text-underline-offset:0.3em}
+.menu-toggle, .menu-foot{display:none}
+
+/* Restore Forward's peach "Book a Consult" circle. It starts across the band's lower
+   edge, then shrinks into the corner and stays there as the page scrolls, so
+   booking is always one tap away. Peach is used for this and nothing else. */
+.badge{
+  position:fixed; z-index:35;   /* above the menu bar, which it hangs across */
+  top:clamp(2.6rem,6.2vw,4.95rem); right:var(--gutter);   /* shares the portrait's right edge */
+  display:grid; place-items:center;
+  width:clamp(6.2rem,11.9vw,9.5rem); aspect-ratio:1; border-radius:50%;
+  background:var(--peach); color:var(--slate); --focus:var(--navy);
+  font:300 clamp(1.05rem,1.875vw,1.5rem)/1.12 var(--ff-display);
+  text-align:center; text-decoration:none;
+}
+.badge.is-compact{top:0.55rem; width:5.4rem; font-size:0.9rem}
+.badge:hover{transform:scale(1.04)}
+
+/* ---------- hero: words on the left, the portrait large on the right, no rules ---------- */
+.hero-grid{display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); column-gap:clamp(1.5rem,3vw,2.5rem); align-items:start}
+.hero-text{display:contents}
+/* The title runs across both columns; the portrait starts level with its second line,
+   whose words end before the portrait's column begins. */
+.hero .title{grid-column:1 / -1; grid-row:1}
+.hero .sub{grid-column:1; margin-top:clamp(2rem,4vw,3.4rem); font:italic 300 var(--t-h5)/1.3 var(--ff-display)}
+.hero .lede{grid-column:1; margin-top:1.3rem; max-width:22em}
+.hero .cta-row{grid-column:1; margin-top:2.2rem}
+.hero-photo{grid-column:2; grid-row:1 / span 4; margin:calc(var(--title-top) + var(--t-h1)) 0 0}
+.hero-photo img{
+  display:block; width:100%; height:auto; aspect-ratio:0.8;
+  object-fit:cover; object-position:50% 50%;
+  border-radius:clamp(2rem,4.7vw,3.75rem) 0;   /* the reference's leaf crop */
+  filter:saturate(.82) sepia(.1);              /* settles the photo into the palette */
+}
+
+/* ---------- lists: plain bullets with relaxed spacing ---------- */
+.facts{columns:2; column-gap:calc(var(--gutter) * 2); margin:0; padding:0 0 0 1.1em; list-style:disc}
+.facts li{padding-left:0.25em; break-inside:avoid}
+.facts li + li{margin-top:0.9rem}
+
+/* A second photograph in the story's label column, in the reference's tall capsule. */
+/* The capsule is the frame: it clips, so the photo can move inside it. */
+.story-photo{margin:0; width:min(100%,17rem); overflow:hidden; border-radius:999px; transform:translateZ(0)}
+.story-photo img{
+  display:block; width:100%; height:auto; aspect-ratio:0.66; object-fit:cover;
+  filter:saturate(.9) sepia(.06);
+}
+
+/* "We will" as the arc of a session: seven numbered moments in large light
+   numerals, the way Restore Forward sets its stats, flowing in two columns. No
+   label column and no rules here, so the section reads as a path, not a list. */
+.arc{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:calc(var(--gutter) * 3); margin:clamp(1rem,1.6vw,1.25rem) 0 0; padding:0; list-style:none}
+/* 1-3 on the left, 4-7 on the right, on shared rows so the two columns stay level. */
+.arc li:nth-child(-n+3){grid-column:1}
+.arc li:nth-child(4){grid-column:2; grid-row:1}
+.arc li:nth-child(5){grid-column:2; grid-row:2}
+.arc li:nth-child(6){grid-column:2; grid-row:3}
+.arc li:nth-child(7){grid-column:2; grid-row:4}
+.arc li{
+  display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:1.2rem; align-items:baseline;
+  break-inside:avoid; padding-bottom:clamp(1.4rem,2.6vw,2.2rem);
+}
+.arc-num{min-width:1.1em; font:300 clamp(2.5rem,5vw,4rem)/0.9 var(--ff-display); font-variant-numeric:lining-nums}   /* one height for every numeral, so every line of text starts level */
+.arc p{max-width:24em}
+.arc li:last-child{padding-bottom:0}   /* the band's own padding ends the section */
+
+/* "Who this is for": the six audiences as short serif statements in three ruled
+   columns, Restore Forward's service-column layout, under a full-width heading. */
+.heading-wide{max-width:22em}
+.who ul{margin:0; list-style:none}   /* padding comes from .grid3 > *, so the rules keep their gutters */
+.who li{font:300 clamp(1.4rem,2.2vw,1.75rem)/1.2 var(--ff-display); max-width:16em; text-wrap:pretty}
+.who li + li{margin-top:clamp(1.2rem,2.2vw,1.8rem)}
+
+/* A full-bleed photograph between sections, the reference's rhythm. The booking
+   badge follows the reader, so no button strip is needed here. */
+.photo-band{position:relative; margin:0; overflow:hidden; line-height:0}
+/* A way to book, centred on the hands: an outline only, so the photo shows through.
+   It sits on the pale sky between the hands, so the outline is the hero's navy. */
+.photo-cta{position:absolute; inset:0; display:grid; place-items:center; padding:var(--gutter); line-height:normal}
+.photo-cta .btn{background:transparent; color:var(--navy); border-color:var(--navy)}
+.photo-cta .btn:hover{background:var(--navy); color:var(--cream)}
+.photo-band img{display:block; width:100%; height:clamp(16rem,36vw,30rem); object-fit:cover; object-position:50% 40%; filter:saturate(.85)}
+
+/* ---------- what you will leave with: large type only, on blue-gray ---------- */
+.rule + .leave{padding-top:var(--after-rule)}
+.leave .pull{margin:0; max-width:16em}
+.leave .lede{margin-top:2rem; max-width:30em}
+.leave .lede + p{margin-top:1.3em; max-width:36em}
+
+/* ---------- booking: each option is a clock that says what it is ----------
+   The peach band is the time you book, from twelve round the face: half an hour
+   fills half of it, an hour all of it, and the pointer rides its leading edge.
+   Inside, the words; below, the price in serif. Colours are the page's own: slate
+   ink, peach for booking, the hero's navy pill. */
+.dials{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:calc(var(--gutter) * 2); row-gap:2.5rem; --clock:clamp(10rem,15.6vw,12.5rem)}
+.dial{display:grid; justify-items:start; align-content:start; color:inherit; text-decoration:none; cursor:pointer}
+.clock{position:relative; display:block; width:var(--clock); aspect-ratio:1}
+.clock svg{position:absolute; inset:0; width:100%; height:100%; overflow:visible}
+.clock-rim, .clock-ticks line{fill:none; stroke:var(--ink); stroke-width:1; vector-effect:non-scaling-stroke; transition:stroke .3s var(--ease)}
+.clock-sweep{
+  fill:none; stroke:var(--peach); stroke-width:11;      /* the band, from r 31 to 42, clear of the words */
+  stroke-dasharray:var(--arc) 100;                       /* --arc 50 = half the face, 100 = all of it */
+  transform:rotate(-90deg); transform-origin:50% 50%;    /* from twelve, clockwise */
+}
+.clock-hand{stroke:var(--ink); stroke-width:1.5; stroke-linecap:round; vector-effect:non-scaling-stroke; transform:rotate(var(--deg)); transform-origin:50% 50%; transition:stroke .3s var(--ease)}
+.clock-text{position:absolute; inset:0; display:grid; place-content:center; row-gap:0.3em; text-align:center; font-size:calc(var(--clock) * 0.07)}
+.clock-text .num{font:300 calc(var(--clock) * 0.27)/0.85 var(--ff-display); font-variant-numeric:lining-nums}
+.clock-text .unit{font:400 max(0.8125rem,1em)/1 var(--ff-label); text-transform:uppercase}
+.dial .price{margin-top:1.3rem; font:300 var(--t-h3)/1 var(--ff-display); font-variant-numeric:lining-nums}
+.dial p{margin:0.9rem 0 0; font-size:var(--t-small); max-width:22em}
+.dial .btn{margin-top:1.4rem}
+.dial:hover .clock-rim, .dial:hover .clock-ticks line, .dial:hover .clock-hand{stroke:var(--navy)}
+.dial:hover .btn-primary{background:var(--slate)}
+
+.hours{margin-top:0}
+.hours dl{display:grid; grid-template-columns:auto 1fr; gap:0.45rem 1.5rem; align-items:baseline}
+.hours dt{font:400 var(--t-caps)/1.5 var(--ff-label); text-transform:uppercase}
+.hours dd{font:400 1.25rem/1.3 var(--ff-display); font-variant-numeric:oldstyle-nums}
+.muted{opacity:0.78}
+
+.note{max-width:44rem; margin-top:2.2rem; font-size:var(--t-small); line-height:1.4}
+.note + .note{margin-top:1rem}
+
+/* ---------- letter: its title on a full-bleed photograph, the words on slate ---------- */
+.band-photo{
+  position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; align-items:flex-start;
+  min-height:clamp(20rem,44vw,35rem); padding-bottom:var(--band-end);
+  background:var(--slate); color:var(--cream); --ink:var(--cream); --focus:var(--cream);
+}
+.band-photo picture, .band-photo img{position:absolute; inset:0; width:100%; height:100%}
+.band-photo img{object-fit:cover; object-position:50% 40%}
+.band-photo::after{content:""; position:absolute; inset:0; background:linear-gradient(to top, rgb(89 99 126 / .9), rgb(89 99 126 / .55) 45%, rgb(89 99 126 / 0) 80%)}
+.band-photo .title, .band-photo .heading{position:relative; z-index:1}
+.band-photo .heading{color:inherit}
+.band-photo .title{padding-top:clamp(6rem,12vw,9rem)}
+/* Her portrait, large, in the letter's label column; her name signs the letter. */
+.letter-portrait{margin:0; width:80%}
+.letter-portrait img{display:block; width:100%; height:auto; aspect-ratio:1; border-radius:50%; object-fit:cover; filter:saturate(.85) sepia(.08)}
+.signoff{margin-top:2.4rem}
+.signoff-name{font:italic 300 1.5rem/1.15 var(--ff-display)}
+.signoff-name span{display:block; margin-top:0.45rem; font:400 var(--t-caps)/1.3 var(--ff-label); letter-spacing:0.04em; text-transform:uppercase}
+.letter .prose p{font:400 1.25rem/1.2 var(--ff-display); max-width:32em}
+.letter .close{margin-top:1.6rem}
+
+/* ---------- footer: three columns, as on Restore Forward ---------- */
+footer{
+  padding:clamp(2.25rem,3.75vw,3rem) var(--gutter);
+  background:var(--slate); color:var(--cream); --focus:var(--cream);
+  border-top:1px solid var(--cream);   /* the letter above is slate too; this is the one line between them */
+}
+.fgrid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:2rem var(--gutter)}
+.flabel{margin-bottom:2.7rem; font:400 var(--t-h6)/1.2 var(--ff-label); text-transform:uppercase}
+.fmenu{display:grid; gap:0.7rem; margin:0; padding:0; list-style:none}
+.fmenu a{font:300 var(--t-caps)/1.3 var(--ff-body); text-transform:uppercase; text-decoration:none}
+.fmenu a:hover, footer p a:hover{text-decoration:underline; text-underline-offset:0.25em}
+footer p{max-width:22em; font-size:var(--t-small)}
+footer p + p{margin-top:0.6rem}
+/* The maker's credit, under everything else: full ink, body size, the link underlined. */
+footer .fcredit{max-width:none; font-size:1.125rem}
+/* Credit on the left, the social icons on the right, as on Restore Forward: cream
+   circles with the band's slate in them, turning to outlines under the pointer. */
+.fbase{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1.5rem 2rem; margin-top:clamp(2.5rem,5vw,4rem)}
+.social{display:flex; gap:0.6rem; margin:0; padding:0; list-style:none}
+.social-link{display:grid; place-items:center; width:2.5rem; aspect-ratio:1; border:1px solid var(--cream); border-radius:50%; background:var(--cream); color:var(--slate); transition:background .3s var(--ease), color .3s var(--ease)}
+.social-link svg{width:1.3rem; height:1.3rem; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linejoin:round}
+.social-link svg .fill{fill:currentColor; stroke:none}
+.social-link[href]{cursor:pointer}
+.social-link[href]:hover{background:transparent; color:var(--cream)}
+.fcredit a{text-decoration:underline; text-underline-offset:0.25em}
+
+/* ---------- macro motion ----------------------------------------------------
+   Sections reveal as they enter the viewport: a short rise and fade, with their
+   parts staggered so a block assembles rather than snapping in, and the rule
+   under the title drawing itself across the page. Slow easing on purpose - this
+   page is read by people who are unwell, and quick or bouncy motion reads as
+   pressure.
+
+   Three ways it stays safe:
+     - the whole thing lives inside prefers-reduced-motion: no-preference
+     - .anim is set by an inline script in <head>, so the hidden pre-state is in
+       place before first paint and nothing flashes
+     - if that script never runs, or IntersectionObserver is missing, no rule
+       below matches and the page renders as plain static HTML
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference){
+  html{scroll-behavior:smooth}
+  .badge{transition:top .5s var(--ease), right .5s var(--ease), width .5s var(--ease), font-size .5s var(--ease), transform .35s var(--ease)}
+  .site-top.can-move .topbar{transition:transform .45s var(--ease)}
+
+  /* Parallax, on the photographs of the land only - the page's windows onto it:
+     the sunflower field, the hands, the roots the letter grows from. Each picture
+     drifts slower than the page, so it reads as further away than its frame and
+     the words beside it. Scaled up just enough that its edges never show. The
+     portraits stay still: a person is not a view. --px
+     runs from 1 (entering at the bottom) to -1 (leaving at the top), set by a
+     small script; without the script it stays 0 and the photo sits still. */
+  .px img{transform:translate3d(0, calc(var(--px, 0) * var(--px-range) * -1), 0) scale(var(--px-scale)); will-change:transform}
+  .story-photo.px{--px-range:14%; --px-scale:1.32}
+  .photo-band.px{--px-range:17%; --px-scale:1.38}
+  .band-photo.px{--px-range:19%; --px-scale:1.42}
+
+  .anim .rv > :not(.rule):not(.grid3):not(.arc):not(picture):not(.hero-grid),
+  .anim .hero-text > *,
+  .anim .rv .grid3 > :not(.stagger),
+  .anim .rv .facts > li, .anim .arc > li,
+  .anim .rv .dials > .dial{
+    opacity:0; transform:translateY(1.5rem);
+    transition:opacity .85s var(--ease), transform .85s var(--ease);
+  }
+  .anim .hero.rv .hero-photo{
+    opacity:0; transform:translateY(1.5rem) scale(.975);
+    transition:opacity 1.1s var(--ease), transform 1.1s var(--ease);
+  }
+  .anim .rv .rule{
+    transform:scaleX(0); transform-origin:left;
+    transition:transform 1.2s var(--ease) .1s;
+  }
+  .anim .rv.in > :not(.rule):not(.grid3):not(.arc):not(picture):not(.hero-grid),
+  .anim .rv.in .hero-text > *,
+  .anim .rv.in .grid3 > :not(.stagger),
+  .anim .rv.in .facts > li, .anim .arc > li.in,
+  .anim .rv.in .dials > .dial,
+  .anim .hero.rv.in .hero-photo,
+  .anim .rv.in .rule{ opacity:1; transform:none; }
+
+  /* Stagger. Explicit steps rather than a loop - CSS cannot multiply an nth index. */
+  .anim .rv .grid3 > :nth-child(2){transition-delay:.12s}
+  .anim .rv .grid3 > :nth-child(3){transition-delay:.24s}
+  .anim .hero.rv .hero-photo{transition-delay:.2s}
+  .anim .hero-text > :nth-child(2){transition-delay:.1s}
+  .anim .hero-text > :nth-child(3){transition-delay:.2s}
+  .anim .hero-text > :nth-child(4){transition-delay:.3s}
+  .anim .rv .facts > li:nth-child(1){transition-delay:.06s}
+  .anim .rv .facts > li:nth-child(2){transition-delay:.13s}
+  .anim .rv .facts > li:nth-child(3){transition-delay:.20s}
+  .anim .rv .facts > li:nth-child(4){transition-delay:.27s}
+  .anim .rv .facts > li:nth-child(5){transition-delay:.34s}
+  .anim .rv .facts > li:nth-child(6){transition-delay:.41s}
+  .anim .rv .facts > li:nth-child(n+7){transition-delay:.48s}
+
+  /* "We will": the seven moments arrive in the order a session walks them. Each
+     step reveals as it comes into view, and its numeral rises into place through
+     the numeral's own edge a beat after its line appears, like a step taken. On
+     a wide screen all seven are in view at once, so they follow one another. */
+  .anim .arc-num{clip-path:inset(-0.4em -0.4em 0 -0.4em)}   /* hides only what is below the numeral */
+  .anim .arc-num > span{display:inline-block; transform:translateY(105%); transition:transform 1s var(--ease) .18s}
+  .anim .arc > li.in .arc-num > span{transform:none}
+  @media (min-width:901px){
+    .anim .arc > li:nth-child(2){transition-delay:.16s} .anim .arc > li:nth-child(2) .arc-num > span{transition-delay:.34s}
+    .anim .arc > li:nth-child(3){transition-delay:.32s} .anim .arc > li:nth-child(3) .arc-num > span{transition-delay:.5s}
+    .anim .arc > li:nth-child(4){transition-delay:.48s} .anim .arc > li:nth-child(4) .arc-num > span{transition-delay:.66s}
+    .anim .arc > li:nth-child(5){transition-delay:.64s} .anim .arc > li:nth-child(5) .arc-num > span{transition-delay:.82s}
+    .anim .arc > li:nth-child(6){transition-delay:.8s}  .anim .arc > li:nth-child(6) .arc-num > span{transition-delay:.98s}
+    .anim .arc > li:nth-child(7){transition-delay:.96s} .anim .arc > li:nth-child(7) .arc-num > span{transition-delay:1.14s}
+  }
+  .anim .rv .dials > .dial:nth-child(2){transition-delay:.12s}
+
+  /* The pointer sweeps the band out, easing in and out, at one speed once under
+     way: 26ms a minute, so the hour takes twice as long as the half hour. */
+  .anim .rv .clock-sweep{stroke-dashoffset:var(--arc); transition:stroke-dashoffset calc(var(--arc) * 26ms) cubic-bezier(.65,0,.35,1) .6s}
+  .anim .rv .clock-hand{transform:rotate(0deg); transition:transform calc(var(--arc) * 26ms) cubic-bezier(.65,0,.35,1) .6s, stroke .3s var(--ease)}
+  .anim .rv.in .clock-sweep{stroke-dashoffset:0}
+  .anim .rv.in .clock-hand{transform:rotate(var(--deg))}
+}
+
+@media (max-width:900px){
+  .menu-toggle{
+    display:grid; place-items:center; width:2.5rem; height:2.5rem; margin-left:auto; padding:0;
+    border:0; background:none; color:inherit; cursor:pointer;
+  }
+  .menu-toggle svg{width:1.5rem; height:0.95rem; overflow:visible; fill:none; stroke:currentColor; stroke-width:1.2}
+  .menu-toggle path{transform-box:fill-box; transform-origin:center}
+  .site-top.is-open .menu-toggle .l1{transform:translateY(6.5px) rotate(45deg)}
+  .site-top.is-open .menu-toggle .l2{opacity:0}
+  .site-top.is-open .menu-toggle .l3{transform:translateY(-6.5px) rotate(-45deg)}
+
+  /* The menu opens as a full screen of slate: the sections as large serif capitals,
+     numbered like the steps of a session, and a way to book at the foot. Her name and
+     the close button stay where they were, above it. */
+  .site-top.is-open .topbar{z-index:40}
+  .brand, .menu-toggle{position:relative; z-index:2}
+  .topnav{
+    position:fixed; inset:0; z-index:1; margin:0;
+    display:flex; flex-direction:column; gap:2.5rem;
+    padding:calc(var(--bar) + 2rem) var(--gutter) calc(clamp(1.5rem,7vw,2.5rem) + env(safe-area-inset-bottom));
+    background:var(--slate); color:var(--cream); --focus:var(--cream);
+    overflow-y:auto; overscroll-behavior:contain;
+    visibility:hidden; opacity:0;
+  }
+  .site-top.is-open .topnav{visibility:visible; opacity:1}
+  html.menu-open{overflow:hidden}   /* the page stays still behind the menu */
+  .site-top.is-open + .badge{display:none}
+  /* The list stays together, sitting just above the middle of the screen; the foot
+     keeps to the bottom. On a short screen the margins give way and it scrolls. */
+  .topnav ul{flex-direction:column; gap:clamp(1.65rem,6.75vw,2.85rem); margin-block:auto; padding-bottom:clamp(1.5rem,9vh,5rem); counter-reset:menu}
+  .topnav li{display:flex; align-items:baseline; gap:clamp(0.9rem,3vw,1.4rem); counter-increment:menu}
+  .topnav li::before{content:counter(menu, decimal-leading-zero); min-width:1.6em; font:400 var(--t-caps)/1 var(--ff-label); letter-spacing:0.08em; opacity:.6}
+  .topnav li a{display:block; font:300 clamp(1.6rem,8.2vw,3.6rem)/1.05 var(--ff-display); letter-spacing:0.01em; text-transform:uppercase}   /* one line each, even "Why I offer this" on a small phone */
+  .topnav li a:hover{text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:0.12em}
+  .topnav li a[aria-current="true"], .topnav li a[aria-current="page"]{text-decoration:none; font-style:italic}   /* where the reader is now */
+  .menu-foot{display:flex; flex-direction:column; align-items:flex-start; gap:1.2rem}
+  .menu-foot .btn{font:300 var(--t-body)/1.2 var(--ff-body); text-transform:none; text-decoration:none; background:var(--cream); color:var(--slate); border-color:var(--cream)}
+  .menu-foot .btn:hover{background:transparent; color:var(--cream)}
+  .menu-foot p{font:400 var(--t-caps)/1.3 var(--ff-label); letter-spacing:0.06em; text-transform:uppercase; opacity:.7}
+  .badge{top:3.6rem}
+  .site-top.is-pinned.is-shown + .badge.is-compact{top:calc(var(--bar) - 0.75rem)}   /* clear of the menu button */
+  .story-photo{width:min(60%,14rem)}
+  .letter-portrait{margin-top:0; width:min(60%,15rem)}
+  .grid3{grid-template-columns:minmax(0,1fr); margin-bottom:0}
+  .grid3 > *, .grid3 > :first-child{border-left:0; padding-inline:var(--gutter); padding-bottom:0}
+  .grid3 > * + *{padding-top:1rem}
+  .span2{grid-column:auto}
+  .facts{columns:1}
+  .arc{display:block}
+  /* Stacked: title, portrait, italic line, lede and buttons. */
+  .hero-grid{grid-template-columns:minmax(0,1fr)}
+  .hero .title, .hero .sub, .hero .lede, .hero .cta-row, .hero-photo{grid-column:auto; grid-row:auto}
+  .hero .title{order:1}
+  .hero-photo{order:2; margin:1.8rem 0 0}
+  .hero .sub{order:3; margin-top:1.6rem}
+  .hero .lede{order:4}
+  .hero .cta-row{order:5}
+  .hero-photo img{width:min(70%,17rem)}
+  .fgrid{grid-template-columns:minmax(0,1fr)}
+}
+
+@media (prefers-reduced-motion: no-preference) and (max-width:900px){
+  /* The screen fades in, then the sections rise one after another and the foot last;
+     closing is a single quiet fade. */
+  .topnav{transition:opacity .45s var(--ease), visibility 0s linear .45s}
+  .site-top.is-open .topnav{transition:opacity .45s var(--ease), visibility 0s}
+  .topnav li, .menu-foot{opacity:0; transform:translateY(1.25rem); transition:opacity .3s var(--ease), transform .3s var(--ease)}
+  .site-top.is-open .topnav li, .site-top.is-open .menu-foot{opacity:1; transform:none; transition:opacity .7s var(--ease), transform .9s var(--ease)}
+  .site-top.is-open .topnav li:nth-child(1){transition-delay:.12s}
+  .site-top.is-open .topnav li:nth-child(2){transition-delay:.18s}
+  .site-top.is-open .topnav li:nth-child(3){transition-delay:.24s}
+  .site-top.is-open .topnav li:nth-child(4){transition-delay:.30s}
+  .site-top.is-open .topnav li:nth-child(5){transition-delay:.36s}
+  .site-top.is-open .menu-foot{transition-delay:.46s}
+  .menu-toggle path{transition:transform .45s var(--ease), opacity .3s var(--ease)}
+}
+
+@media (max-width:640px){
+  /* Phones use Restore Forward's mobile type, measured on restoreny.org. Wix draws its
+     mobile pages on a 320px canvas, so sizes scale with the screen, up to their
+     values on a 390px phone. */
+  :root{
+    --t-h1:min(11vw,43px);        /* page title */
+    --t-h2:min(8.53vw,33px);      /* big mixed-case title */
+    --t-h3:min(6.67vw,26px);      /* section heading */
+    --t-h5:min(6.15vw,24px);      /* italic line, signature */
+    --t-h6:min(4.1vw,16px);       /* small capital labels */
+    --t-stat:min(7.69vw,30px);    /* numerals */
+    --t-quote:min(7.79vw,30.4px);
+    --t-lede:min(4.62vw,18px);
+    --t-body:min(4.1vw,16px);
+    --t-serif:min(5.13vw,20px);   /* the letter, the hours */
+    --t-small:min(3.59vw,14px);
+    --t-caps:min(3.33vw,13px);
+  }
+  :root{
+    /* Spacing scales with the screen exactly like the type, from the same 320px canvas,
+       so the proportions hold on every phone. Measured on restoreny.org's phone
+       "OUR MISSION" at 320: 48px above the title's capitals, 37 from them to the rule,
+       30 from the rule to the text, a 20px margin. */
+    --gutter:min(6.25vw,24.4px);
+    --top-band:min(11.8vw,46px);     /* a slim menu bar */
+    --title-top:min(14.2vw,55.4px);
+    --rule-gap:min(10.6vw,41.4px);
+    --after-rule:min(8.25vw,32.2px);
+    --band-end:min(13.75vw,53.6px);
+  }
+  :root{--bar:var(--top-band)}
+  .site-top{min-height:var(--top-band)}
+  .title + .heading{margin-top:1.75vw}
+  .heading + .rule{margin-top:2.5vw}   /* title and subtitle read as one block above the rule */
+  .arc{margin-top:min(6.75vw,26.3px)}
+  /* Two button sizes, as on restoreny.org's phone pages. */
+  .btn{min-height:min(11.1vw,43px); padding:0 min(7.2vw,28px)}
+  .btn-lg{min-height:min(17.5vw,68px); min-width:min(59vw,230px)}
+  body, .btn, footer .fcredit{font-size:var(--t-body)}
+  .brand{font-size:var(--t-serif)}   /* her name a step above body text on a phone: 20px at 390 */
+  .fbase{flex-direction:column-reverse; align-items:flex-start}   /* icons first, the credit last */
+  .social-link{width:min(11vw,43px)}
+  .lede{font-size:var(--t-lede)}
+  .letter .prose p, .hours dd{font-size:var(--t-serif)}
+  .signoff-name{font-size:var(--t-h5)}
+  .arc-num{font-size:var(--t-stat)}
+  .who li{font-size:min(5.74vw,22.4px)}
+  /* The badge hangs from the menu bar's lower edge, as on restoreny.org, clear of the menu icon. */
+  /* On a phone the badge starts just under the menu bar, tucked into the corner as
+     far from the right edge as from the bar, so the headline can start higher. */
+  .badge{top:calc(var(--top-band) + 0.55rem); right:0.55rem; width:min(26.4vw,103px); font-size:min(5.13vw,20px)}
+  /* Once scrolled, the badge stays small and tucked into the corner, as far from the
+     right edge as from the top - and when the bar comes back it keeps that size and
+     that edge, just stepping down below the bar. */
+  .badge.is-compact{right:0.55rem}
+  .site-top.is-pinned.is-shown + .badge.is-compact{top:calc(var(--top-band) + 0.55rem); right:0.55rem; width:5.4rem; font-size:0.9rem}
+
+  /* Start the headline below the badge so the two never collide. */
+  .hero .title{padding-top:min(4.2vw,16.4px)}   /* the page title sits close under the bar, ~20px to its capitals on the 320 canvas, as on restoreny.org */
+  .brand-sub{display:none}
+  .dials{grid-template-columns:minmax(0,1fr); row-gap:min(15vw,58px); --clock:min(46vw,180px)}
+  /* On a phone the band is taller, so the ring of hands is drawn larger and the sky
+     between them is wide enough for the button; the button is kept compact. */
+  .photo-band img{height:min(78.2vw,305px)}
+  .photo-cta .btn-lg{min-width:0; min-height:min(11.1vw,43px); padding:0 min(5vw,20px)}
+  /* Booking: tight inside each group, wide between the hours, each option and the notes. */
+  #book .grid3 > * + *{padding-top:min(15vw,58px)}
+  .dials + .note{margin-top:min(15vw,58px)}
+  /* Footer links far enough apart to read and tap, as on the reference. */
+  .flabel{margin-bottom:min(10vw,39px)}
+  .fmenu{gap:min(7vw,27.3px)}   /* ~40px from line to line on the 320 canvas, as on the reference */
+  .band-photo .heading{font-size:var(--t-serif)}   /* clearly under its title */
+  .hours dl{grid-template-columns:minmax(0,1fr); gap:0.2rem}
+  .hours dt{margin-top:min(5.6vw,22px)}
+  .hours dt:first-of-type{margin-top:0}
+  .cta-row{flex-direction:column; align-items:flex-start}
+}
+/* site-css:end */
+</style>
+<style>
+/* ---------- Restore Forward service pages ---------- */
+
+/* The page opens like restoreny.org's inner pages: a large title, its line in italic
+   serif beneath, the rule, then the introduction and the two ways onward. */
+.page-intro{padding-top:var(--after-rule)}
+.page-intro .lede{max-width:36em}
+.page-intro .cta-row{margin-top:2rem}
+
+/* Offerings in ruled columns, each a serif name and a short description. */
+.grid2{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); margin:0 calc(-1 * var(--gutter)) calc(-1 * var(--band-end))}
+.grid2 > *{padding:var(--after-rule) var(--col-pad) var(--band-end); border-left:1px solid var(--line)}
+.grid2 > :first-child{border-left:0; padding-left:var(--gutter)}
+.offer h3{font:300 var(--t-h5)/1.2 var(--ff-display); text-wrap:balance}
+.offer p{margin-top:0.7rem; font-size:var(--t-small); line-height:1.4; max-width:26em}
+.offer + .offer{margin-top:clamp(2rem,3.6vw,2.9rem)}
+
+/* The closing thought on slate, with the one button. */
+.closing{padding-top:var(--band-end)}
+.closing .pull{margin:0; max-width:20em}
+.closing .cta-row{margin-top:2rem}
+
+@media (max-width:900px){
+  .grid2{grid-template-columns:minmax(0,1fr); margin-bottom:0}
+  .grid2 > *, .grid2 > :first-child{border-left:0; padding-inline:var(--gutter); padding-bottom:0}
+  .grid2 > * + *{padding-top:1rem}
+}
+@media (max-width:640px){
+  .offer h3{font-size:var(--t-h5)}
+  /* Single long words ("Ecological") must end before the badge's corner. */
+  .title-h1{font-size:min(9.4vw,36.7px)}
+}
+
+/* ============ Restore Forward's header and footer, as on restoreny.org ============
+   Measured on the live site. Its desktop layout is drawn on a 1280px canvas that
+   scales with the window (--u is one canvas pixel, never more than a real pixel);
+   phones use a 320px canvas (--m, up to its size on a 390px phone). */
+:root{--u:min(1px, calc(100vw / 1280)); --m:min(1.21875px, calc(100vw / 320)); --rf-sub:#D9E2FC}
+
+/* ---- header: pinned, logo lockup, menu with its dropdowns, the Donate pill ---- */
+.rf-header{position:sticky; top:0; z-index:50; display:flex; align-items:center; height:calc(76 * var(--u)); padding:0 calc(17 * var(--u)) 0 calc(10 * var(--u)); background:var(--slate)}
+.rf-logo{display:block; flex:none; align-self:flex-start; margin-top:calc(7 * var(--u)); line-height:0}
+.rf-logo img{width:calc(259 * var(--u)); height:calc(57 * var(--u)); object-fit:cover}
+.rf-nav{margin-left:calc(7 * var(--u))}
+.rf-nav > ul{display:flex; align-items:center; margin:0; padding:0; list-style:none}
+.rf-nav > ul > li{position:relative; display:flex; align-items:center; padding:0 calc(8 * var(--u)); height:calc(25 * var(--u))}
+.rf-nav a, .rf-nav .rf-label{font:300 calc(12 * var(--u))/calc(17 * var(--u)) 'Avenir','Nunito Sans',system-ui,sans-serif; color:var(--cream); text-transform:uppercase; text-decoration:none; white-space:nowrap}
+.rf-nav a:hover{text-decoration:underline; text-underline-offset:0.25em}
+.rf-chev{display:grid; place-items:center; width:calc(8 * var(--u)); height:calc(8 * var(--u)); margin-left:calc(4 * var(--u)); padding:0; border:0; background:none; cursor:pointer}
+.rf-chev svg{width:100%; height:auto; fill:var(--cream); transition:transform .25s ease}
+.rf-chev[aria-expanded="true"] svg{transform:rotate(180deg)}
+.rf-nav .rf-sub{
+  position:absolute; top:100%; left:0; display:none; gap:calc(10 * var(--u));
+  margin:calc(14 * var(--u)) 0 0; padding:calc(14 * var(--u)) calc(16 * var(--u)); list-style:none;
+  background:var(--slate); white-space:nowrap;
+}
+.rf-nav .has-sub:hover .rf-sub, .rf-nav .has-sub.open .rf-sub{display:grid}
+.rf-nav .has-sub:hover .rf-sub::before{content:""; position:absolute; left:0; right:0; top:calc(-14 * var(--u)); height:calc(14 * var(--u))}
+.rf-nav .rf-sub a{color:var(--rf-sub)}
+.rf-donate{
+  display:inline-flex; align-items:center; justify-content:center; flex:none; margin-left:auto;
+  width:calc(105 * var(--u)); height:calc(38 * var(--u)); border:1px solid var(--slate); border-radius:calc(23 * var(--u));
+  background:var(--cream); color:var(--slate); font:300 calc(12 * var(--u))/1 'Avenir','Nunito Sans',system-ui,sans-serif; text-decoration:none;
+}
+.rf-toggle, .rf-menu{display:none}
+/* the slate band runs on below the header, to 136px, where the badge hangs across its edge */
+.rf-strip{height:calc(60 * var(--u)); background:var(--slate)}
+.rf-badge{
+  position:absolute; z-index:40; top:calc(80 * var(--u)); right:calc(53 * var(--u));
+  display:grid; place-items:center; width:calc(151 * var(--u)); aspect-ratio:1; border-radius:50%;
+  background:var(--peach); color:var(--slate); font:300 calc(24 * var(--u))/1.12 var(--ff-display); text-align:center; text-decoration:none;
+}
+.rf-badge:hover{transform:scale(1.03)}
+
+/* ---- footer: menu, address with the newsletter, and the message form ---- */
+.rf-footer{position:relative; height:calc(725 * var(--u)); background:var(--slate); color:var(--cream); --focus:var(--cream)}
+.rf-footer h6{margin:0; font:400 calc(22 * var(--u))/calc(26 * var(--u)) 'Syne',var(--ff-label); text-transform:uppercase}
+.rf-col{position:absolute}
+.rf-col-menu{left:calc(47 * var(--u)); top:calc(47 * var(--u)); width:calc(412 * var(--u))}
+.rf-col-menu h6{margin-left:calc(2 * var(--u))}
+.rf-fmenu{margin:calc(43 * var(--u)) 0 0; padding:0; list-style:none}
+.rf-fmenu > li{min-height:calc(35 * var(--u))}
+.rf-fmenu > li > a, .rf-fmenu .rf-label{font:300 calc(14 * var(--u))/calc(19 * var(--u)) 'Avenir','Nunito Sans',system-ui,sans-serif; color:var(--cream); text-transform:uppercase; text-decoration:none}
+.rf-fmenu .rf-chev{display:inline-grid; width:calc(12 * var(--u)); height:calc(12 * var(--u)); margin-left:calc(20 * var(--u)); vertical-align:calc(1 * var(--u))}
+.rf-fmenu .rf-sub{display:none; margin:calc(8 * var(--u)) 0 calc(10 * var(--u)); padding:0; list-style:none}
+.rf-fmenu .has-sub.open .rf-sub{display:grid; gap:calc(12 * var(--u))}
+.rf-fmenu .rf-sub a{font:300 calc(12 * var(--u))/calc(17 * var(--u)) 'Avenir','Nunito Sans',system-ui,sans-serif; color:var(--rf-sub); text-transform:uppercase; text-decoration:none}
+.rf-fmenu a:hover{text-decoration:underline; text-underline-offset:0.25em}
+
+.rf-col-address{left:calc(459 * var(--u)); top:calc(47 * var(--u)); width:calc(300 * var(--u))}
+.rf-address{margin:calc(45 * var(--u)) 0 0 calc(2 * var(--u)); width:calc(233 * var(--u)); font:300 calc(18 * var(--u))/1.3 'Avenir','Nunito Sans',system-ui,sans-serif}
+.rf-address a{text-decoration:none}
+.rf-news-title{position:absolute; top:calc(284 * var(--u)); left:0; white-space:nowrap}
+.rf-news{position:absolute; top:calc(358 * var(--u)); left:calc(-4 * var(--u)); width:calc(270 * var(--u))}
+.rf-line{
+  display:block; width:100%; height:calc(39 * var(--u)); margin:0; padding:0 calc(12 * var(--u)); border:0; border-bottom:1px solid var(--cream);
+  background:transparent; color:var(--cream); font:300 calc(18 * var(--u))/1 'Avenir','Nunito Sans',system-ui,sans-serif; border-radius:0;
+}
+.rf-line::placeholder{color:var(--cream); opacity:1}
+.rf-news .rf-line{width:calc(253 * var(--u))}
+.rf-check{display:grid; grid-template-columns:calc(16 * var(--u)) 1fr; column-gap:calc(12 * var(--u)); align-items:center; margin-top:calc(25 * var(--u)); font:300 calc(18 * var(--u))/calc(27 * var(--u)) 'Avenir','Nunito Sans',system-ui,sans-serif; cursor:pointer}
+.rf-check input{appearance:none; width:calc(16 * var(--u)); height:calc(16 * var(--u)); margin:0; border:1px solid var(--cream); background:transparent; cursor:pointer}
+.rf-check input:checked{background:var(--cream)}
+.rf-pill{
+  display:inline-flex; align-items:center; justify-content:center; height:calc(48 * var(--u)); padding:0;
+  border:1px solid var(--cream); border-radius:100px; background:transparent; color:var(--cream);
+  font:300 calc(20 * var(--u))/1 'Avenir','Nunito Sans',system-ui,sans-serif; cursor:pointer; transition:background .25s ease, color .25s ease;
+}
+.rf-pill:hover{background:var(--cream); color:var(--slate)}
+.rf-news .rf-pill{width:calc(193 * var(--u)); margin:calc(24 * var(--u)) 0 0 calc(36 * var(--u))}
+
+.rf-col-message{left:calc(930 * var(--u)); top:calc(47 * var(--u)); width:calc(310 * var(--u))}
+.rf-form{margin:calc(41 * var(--u)) 0 0 calc(10 * var(--u)); width:calc(290 * var(--u))}
+.rf-form label{display:block; font:300 calc(18 * var(--u))/calc(23 * var(--u)) 'Avenir','Nunito Sans',system-ui,sans-serif}
+.rf-form .rf-line{width:calc(278 * var(--u)); margin:calc(9 * var(--u)) 0 calc(25 * var(--u)); padding:0}
+.rf-form textarea.rf-line{width:calc(290 * var(--u)); height:calc(75 * var(--u)); margin:calc(16 * var(--u)) 0 0; resize:none; padding-top:calc(6 * var(--u))}
+.rf-form .rf-pill{width:calc(212 * var(--u)); margin-top:calc(33 * var(--u)); background:var(--slate)}
+.rf-form .rf-pill:hover{background:var(--cream); color:var(--slate)}
+
+.rf-social{position:absolute; left:calc(1028 * var(--u)); top:calc(649 * var(--u)); display:flex; gap:calc(12 * var(--u)); margin:0; padding:0; list-style:none}
+.rf-social a{display:grid; place-items:center; width:calc(30 * var(--u)); height:calc(30 * var(--u)); border-radius:50%; background:var(--cream); color:var(--slate)}
+.rf-social svg{width:62%; height:62%; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linejoin:round}
+.rf-social svg .fill{fill:currentColor; stroke:none}
+.rf-social svg .cut{fill:var(--cream); stroke:none}
+
+/* ---- phones: restoreny.org's mobile header, full-screen menu and stacked footer ---- */
+@media (max-width:900px){
+  .rf-header{height:calc(38.6 * var(--m)); padding:0}
+  .rf-logo{position:absolute; left:calc(23.8 * var(--m)); top:calc(4.1 * var(--m)); margin:0}
+  .rf-logo img{width:calc(119.8 * var(--m)); height:calc(26.3 * var(--m))}
+  .rf-nav{display:none}
+  .rf-donate{position:absolute; left:calc(180.5 * var(--m)); top:calc(6.6 * var(--m)); width:calc(68 * var(--m)); height:calc(24.6 * var(--m)); border-radius:calc(49 * var(--m)); font-size:calc(13.1 * var(--m))}
+  .rf-toggle{position:absolute; left:calc(264.2 * var(--m)); top:calc(6.6 * var(--m)); display:grid; place-items:center; width:calc(27.9 * var(--m)); height:calc(27.9 * var(--m)); padding:0; border:0; background:var(--slate); color:var(--cream); cursor:pointer}
+  .rf-toggle svg{width:calc(19 * var(--m)); height:calc(12 * var(--m)); fill:none; stroke:currentColor; stroke-width:1}
+  .rf-strip{height:calc(32 * var(--m))}
+  .rf-badge{top:calc(42.5 * var(--m)); right:calc(14.5 * var(--m)); width:calc(85.5 * var(--m)); font-size:calc(16.4 * var(--m))}
+
+  /* the menu: a full screen of slate with the site's sections, their sub-pages folding open */
+  .rf-menu{position:fixed; inset:0; z-index:60; display:block; overflow-y:auto; padding:calc(64 * var(--m)) calc(28 * var(--m)) calc(40 * var(--m)); background:var(--slate); visibility:hidden; opacity:0; transition:opacity .3s ease, visibility 0s linear .3s}
+  .rf-menu.open{visibility:visible; opacity:1; transition:opacity .3s ease}
+  .rf-menu-close{position:absolute; left:calc(264.2 * var(--m)); top:calc(6.6 * var(--m)); display:grid; place-items:center; width:calc(27.9 * var(--m)); height:calc(27.9 * var(--m)); padding:0; border:0; background:none; color:var(--cream); cursor:pointer}
+  .rf-menu-close svg{width:calc(16 * var(--m)); height:calc(16 * var(--m)); fill:none; stroke:currentColor; stroke-width:1.2}
+  .rf-menu > ul{margin:0; padding:0; list-style:none}
+  .rf-menu > ul > li{padding:calc(10 * var(--m)) 0}
+  .rf-menu a, .rf-menu .rf-label{font:300 calc(14 * var(--m))/1.4 'Avenir','Nunito Sans',system-ui,sans-serif; color:var(--cream); text-transform:uppercase; text-decoration:none}
+  .rf-menu .rf-chev{display:inline-grid; width:calc(12 * var(--m)); height:calc(12 * var(--m)); margin-left:calc(18 * var(--m)); vertical-align:0}
+  .rf-menu .rf-sub{display:none; margin:calc(10 * var(--m)) 0 0; padding:0 0 0 calc(12 * var(--m)); list-style:none}
+  .rf-menu .has-sub.open .rf-sub{display:grid; gap:calc(10 * var(--m))}
+  .rf-menu .rf-sub a{font-size:calc(12 * var(--m)); color:var(--rf-sub)}
+  html.rf-menu-open{overflow:hidden}
+
+  .rf-footer{height:calc(1660 * var(--m))}
+  .rf-footer h6{font-size:calc(15 * var(--m)); line-height:calc(18 * var(--m))}
+  .rf-col-menu{left:calc(20 * var(--m)); top:calc(48 * var(--m)); width:calc(280 * var(--m))}
+  .rf-col-menu h6{margin-left:0}
+  .rf-fmenu{margin:calc(33 * var(--m)) 0 0 calc(8 * var(--m))}
+  .rf-fmenu > li{min-height:calc(39.5 * var(--m))}
+  .rf-fmenu > li > a, .rf-fmenu .rf-label{font-size:calc(12 * var(--m)); line-height:calc(16 * var(--m))}
+  .rf-fmenu .rf-chev{width:calc(12 * var(--m)); height:calc(12 * var(--m)); margin-left:calc(41 * var(--m))}
+  .rf-fmenu .rf-sub a{font-size:calc(11 * var(--m)); line-height:calc(15 * var(--m))}
+  .rf-fmenu .rf-sub{margin:calc(8 * var(--m)) 0 calc(6 * var(--m))}
+  .rf-fmenu .has-sub.open .rf-sub{gap:calc(10 * var(--m))}
+
+  /* Wix stacks these in its own order: the two form headings, the form, the address,
+     the social icons, and the newsletter field last */
+  .rf-col-address, .rf-col-message{position:static}
+  .rf-news-title{top:calc(437 * var(--m)); left:calc(20 * var(--m))}
+  .rf-col-message h6{position:absolute; top:calc(465.5 * var(--m)); left:calc(20 * var(--m))}
+  .rf-form{position:absolute; top:calc(504 * var(--m)); left:calc(44 * var(--m)); width:calc(263.5 * var(--m)); margin:0}
+  .rf-form label{font-size:calc(20 * var(--m)); line-height:calc(26 * var(--m))}
+  .rf-form .rf-line{width:100%; height:calc(38 * var(--m)); margin:calc(3 * var(--m)) 0 calc(28 * var(--m)); font-size:calc(20 * var(--m))}
+  .rf-form textarea.rf-line{width:100%; height:calc(95 * var(--m)); margin:calc(3 * var(--m)) 0 0}
+  .rf-form .rf-pill{width:calc(191 * var(--m)); height:calc(47 * var(--m)); margin-top:calc(25 * var(--m)); font-size:calc(22 * var(--m))}
+  .rf-col-address h6{position:absolute; top:calc(1068 * var(--m)); left:calc(20 * var(--m))}
+  .rf-address{position:absolute; top:calc(1108 * var(--m)); left:calc(20 * var(--m)); width:calc(280 * var(--m)); margin:0; font-size:calc(13 * var(--m)); line-height:calc(17.5 * var(--m))}
+  .rf-address .rf-wrap{display:none}
+  .rf-social{left:calc(20 * var(--m)); top:calc(1258 * var(--m)); gap:calc(12.5 * var(--m))}
+  .rf-social a{width:calc(24 * var(--m)); height:calc(24 * var(--m))}
+  .rf-news{top:calc(1356 * var(--m)); left:calc(105.5 * var(--m)); width:calc(168 * var(--m))}
+  .rf-news .rf-line{width:100%; height:calc(39 * var(--m)); padding:0 0 0 calc(13 * var(--m)); font-size:calc(18 * var(--m))}
+  .rf-check{grid-template-columns:calc(16 * var(--m)) calc(134 * var(--m)); column-gap:calc(12.5 * var(--m)); margin-top:calc(31 * var(--m)); font-size:calc(18 * var(--m)); line-height:calc(27 * var(--m))}
+  .rf-check input{width:calc(16 * var(--m)); height:calc(16 * var(--m))}
+  .rf-news .rf-pill{width:calc(119 * var(--m)); height:calc(47 * var(--m)); margin:calc(21 * var(--m)) 0 0 calc(24.5 * var(--m)); font-size:calc(22 * var(--m))}
+}
+</style>
+</head>
+<body>
+
+<header class="rf-header">
+  <a class="rf-logo" href="https://www.restoreny.org"><img src="https://static.wixstatic.com/media/400180_e4a33127d54c4924a12883ac7ea2c1fe~mv2.jpg/v1/fill/w_518,h_114,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/dlt.jpg" alt="Restore Forward | The Reconciliation Center" width="259" height="57"></a>
+  <nav class="rf-nav" aria-label="Site">
+    <ul>
+        <li class="has-sub"><a href="https://www.restoreny.org/healing-needs">Healing Needs</a><button class="rf-chev" type="button" aria-expanded="false" aria-controls="nav-sub-0" aria-label="More Healing Needs pages"><svg viewBox="0 0 16 11" aria-hidden="true"><path d="M8 10.5L16 1.86193L14.7387 0.5L8 7.77613L1.26133 0.499999L0 1.86193L8 10.5Z"/></svg></button><ul class="rf-sub" id="nav-sub-0"><li><a href="https://www.restoreny.org/biological-physiological-needs">Biological/Physiological Focused Needs</a></li><li><a href="https://www.restoreny.org/psychological-emotional-needs">Psychological/Emotional Focused Needs</a></li><li><a href="https://www.restoreny.org/social-group-needs">Social/Group Needs</a></li></ul></li>
+        <li class="has-sub"><a href="https://www.restoreny.org/therapies-and-interventions">Therapies &amp; Interventions</a><button class="rf-chev" type="button" aria-expanded="false" aria-controls="nav-sub-1" aria-label="More Therapies & Interventions pages"><svg viewBox="0 0 16 11" aria-hidden="true"><path d="M8 10.5L16 1.86193L14.7387 0.5L8 7.77613L1.26133 0.499999L0 1.86193L8 10.5Z"/></svg></button><ul class="rf-sub" id="nav-sub-1"><li><a href="https://www.restoreny.org/mental-emotional-psychological-wellness-interventions">Mental, Emotional &amp; Psychological Wellness Interventions</a></li><li><a href="https://www.restoreny.org/metabolic-and-regenerative-therapies">Metabolic &amp; Regenerative Therapies</a></li><li><a href="https://www.restoreny.org/cellular-and-detoxification-therapies">Cellular &amp; Detoxification Therapies</a></li></ul></li>
+        <li><a href="https://www.institute-restoreny.org/restore-forward-membership">Become a Member</a></li>
+        <li><a href="https://www.restoreny.org/freedom-house">Stays</a></li>
+        <li><a href="https://www.restoreny.org#Events%20(Fullwidth)">Events</a></li>
+        <li><a href="https://www.restoreny.org/about-2-1">Cooperative</a></li>
+        <li><a href="https://www.restoreny.org/community-services">Community Services</a></li>
+        <li class="has-sub"><span class="rf-label">More</span><button class="rf-chev" type="button" aria-expanded="false" aria-controls="nav-sub-7" aria-label="More More pages"><svg viewBox="0 0 16 11" aria-hidden="true"><path d="M8 10.5L16 1.86193L14.7387 0.5L8 7.77613L1.26133 0.499999L0 1.86193L8 10.5Z"/></svg></button><ul class="rf-sub" id="nav-sub-7"><li><a href="https://www.restoreny.org/our-history">Our History</a></li><li><a href="https://www.restoreny.org/about-us">About Us</a></li></ul></li>
+    </ul>
+  </nav>
+  <a class="rf-donate" href="https://blackwomensblueprint.ourpowerbase.net/civicrm/contribute/transact?reset=1&id=4" target="_blank" rel="noopener">Donate</a>
+  <button class="rf-toggle" type="button" aria-expanded="false" aria-controls="rf-menu" aria-label="Menu"><svg viewBox="0 0 19 12" aria-hidden="true"><path d="M0 .5h19M0 6h19M0 11.5h19"/></svg></button>
+</header>
+<div class="rf-menu" id="rf-menu" role="dialog" aria-label="Menu">
+  <button class="rf-menu-close" type="button" aria-label="Close menu"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 1l14 14M15 1L1 15"/></svg></button>
+  <ul>
+        <li class="has-sub"><a href="https://www.restoreny.org/healing-needs">Healing Needs</a><button class="rf-chev" type="button" aria-expanded="false" aria-controls="mob-sub-0" aria-label="More Healing Needs pages"><svg viewBox="0 0 16 11" aria-hidden="true"><path d="M8 10.5L16 1.86193L14.7387 0.5L8 7.77613L1.26133 0.499999L0 1.86193L8 10.5Z"/></svg></button><ul class="rf-sub" id="mob-sub-0"><li><a href="https://www.restoreny.org/biological-physiological-needs">Biological/Physiological Focused Needs</a></li><li><a href="https://www.restoreny.org/psychological-emotional-needs">Psychological/Emotional Focused Needs</a></li><li><a href="https://www.restoreny.org/social-group-needs">Social/Group Needs</a></li></ul></li>
+        <li class="has-sub"><a href="https://www.restoreny.org/therapies-and-interventions">Therapies &amp; Interventions</a><button class="rf-chev" type="button" aria-expanded="false" aria-controls="mob-sub-1" aria-label="More Therapies & Interventions pages"><svg viewBox="0 0 16 11" aria-hidden="true"><path d="M8 10.5L16 1.86193L14.7387 0.5L8 7.77613L1.26133 0.499999L0 1.86193L8 10.5Z"/></svg></button><ul class="rf-sub" id="mob-sub-1"><li><a href="https://www.restoreny.org/mental-emotional-psychological-wellness-interventions">Mental, Emotional &amp; Psychological Wellness Interventions</a></li><li><a href="https://www.restoreny.org/metabolic-and-regenerative-therapies">Metabolic &amp; Regenerative Therapies</a></li><li><a href="https://www.restoreny.org/cellular-and-detoxification-therapies">Cellular &amp; Detoxification Therapies</a></li></ul></li>
+        <li><a href="https://www.institute-restoreny.org/restore-forward-membership">Become a Member</a></li>
+        <li><a href="https://www.restoreny.org/freedom-house">Stays</a></li>
+        <li><a href="https://www.restoreny.org#Events%20(Fullwidth)">Events</a></li>
+        <li><a href="https://www.restoreny.org/about-2-1">Cooperative</a></li>
+        <li><a href="https://www.restoreny.org/community-services">Community Services</a></li>
+        <li class="has-sub"><span class="rf-label">More</span><button class="rf-chev" type="button" aria-expanded="false" aria-controls="mob-sub-7" aria-label="More More pages"><svg viewBox="0 0 16 11" aria-hidden="true"><path d="M8 10.5L16 1.86193L14.7387 0.5L8 7.77613L1.26133 0.499999L0 1.86193L8 10.5Z"/></svg></button><ul class="rf-sub" id="mob-sub-7"><li><a href="https://www.restoreny.org/our-history">Our History</a></li><li><a href="https://www.restoreny.org/about-us">About Us</a></li></ul></li>
+  </ul>
+</div>
+<div class="rf-strip" aria-hidden="true"></div>
+<a class="rf-badge" href="https://calendly.com/outreach-blueprintny/30min" target="_blank" rel="noopener">Book a<br>Consult</a>
+
+<section class="rv band" id="top">
+  <h1 class="title title-h1">Immersive<br>Farming</h1>
+  <p class="heading">Healing Begins in the Soil</p>
+  <hr class="rule">
+  <div class="grid3">
+    <div>
+      <figure class="story-photo">
+        <picture>
+          <source srcset="../../images/sunflowers.webp" type="image/webp">
+          <img src="../../images/sunflowers.jpg" alt="" width="800" height="1212" decoding="async">
+        </picture>
+      </figure>
+    </div>
+    <div class="span2 page-intro">
+      <p class="lede">There's a particular kind of restoration that happens when your hands meet the earth. Our working land invites you into the rhythms of planting, tending, and harvesting — nurturing the very vegetables and healing herbs that nourish our wider community. More than an activity, immersive farming is a return to something ancient: the understanding that caring for the land and caring for ourselves are one and the same.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href="https://calendly.com/outreach-blueprintny/30min" target="_blank" rel="noopener">Book a Consultation</a>
+        <a class="btn btn-ghost btn-lg" href="#offerings">See the Offerings</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rv band" id="offerings">
+  <h2 class="title">Offerings</h2>
+  <hr class="rule">
+  <div class="grid3">
+      <div>
+        <div class="offer"><h3>Regenerative Growing</h3><p>Take part in farming practices that restore the soil, protect the land, and honor the cycles of the Earth.</p></div>
+        <div class="offer"><h3>Planting &amp; Harvest Days</h3><p>Join the hands-on rhythm of sowing seeds and gathering the harvest, connecting directly to the food that sustains us.</p></div>
+      </div>
+      <div>
+        <div class="offer"><h3>Healing Herb Cultivation</h3><p>Learn to grow, tend, and work with the medicinal herbs that have nourished and healed communities for generations.</p></div>
+        <div class="offer"><h3>Cooperative Farming</h3><p>Become part of a shared model of land stewardship, where the work and the harvest are held in common.</p></div>
+      </div>
+      <div>
+        <div class="offer"><h3>Farm-to-Family Programs</h3><p>Help grow nutrient-rich produce that travels from our land to families in need, extending healing beyond our gates.</p></div>
+        <div class="offer"><h3>Land Stewardship Practices</h3><p>Deepen your relationship with the Earth through the quiet, grounding work of caring for living soil.</p></div>
+      </div>
+  </div>
+</section>
+
+<section class="rv band band-slate closing">
+  <p class="pull">Hands-on participation — caring for the land as a way of caring for ourselves.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://calendly.com/outreach-blueprintny/30min" target="_blank" rel="noopener">Book a Consultation</a>
+  </div>
+</section>
+
+<footer class="rf-footer">
+  <div class="rf-col rf-col-menu">
+    <h6>Menu</h6>
+    <ul class="rf-fmenu">
+        <li class="has-sub"><a href="https://www.restoreny.org/healing-needs">Healing Needs</a><button class="rf-chev" type="button" aria-expanded="false" aria-controls="foot-sub-0" aria-label="More Healing Needs pages"><svg viewBox="0 0 16 11" aria-hidden="true"><path d="M8 10.5L16 1.86193L14.7387 0.5L8 7.77613L1.26133 0.499999L0 1.86193L8 10.5Z"/></svg></button><ul class="rf-sub" id="foot-sub-0"><li><a href="https://www.restoreny.org/biological-physiological-needs">Biological/Physiological Focused Needs</a></li><li><a href="https://www.restoreny.org/psychological-emotional-needs">Psychological/Emotional Focused Needs</a></li><li><a href="https://www.restoreny.org/social-group-needs">Social/Group Needs</a></li></ul></li>
+        <li class="has-sub"><a href="https://www.restoreny.org/therapies-and-interventions">Therapies &amp; Interventions</a><button class="rf-chev" type="button" aria-expanded="false" aria-controls="foot-sub-1" aria-label="More Therapies & Interventions pages"><svg viewBox="0 0 16 11" aria-hidden="true"><path d="M8 10.5L16 1.86193L14.7387 0.5L8 7.77613L1.26133 0.499999L0 1.86193L8 10.5Z"/></svg></button><ul class="rf-sub" id="foot-sub-1"><li><a href="https://www.restoreny.org/mental-emotional-psychological-wellness-interventions">Mental, Emotional &amp; Psychological Wellness Interventions</a></li><li><a href="https://www.restoreny.org/metabolic-and-regenerative-therapies">Metabolic &amp; Regenerative Therapies</a></li><li><a href="https://www.restoreny.org/cellular-and-detoxification-therapies">Cellular &amp; Detoxification Therapies</a></li></ul></li>
+        <li><a href="https://www.institute-restoreny.org/restore-forward-membership">Become a Member</a></li>
+        <li><a href="https://www.restoreny.org/freedom-house">Stays</a></li>
+        <li><a href="https://www.restoreny.org#Events%20(Fullwidth)">Events</a></li>
+        <li><a href="https://www.restoreny.org/about-2-1">Cooperative</a></li>
+        <li><a href="https://www.restoreny.org/community-services">Community Services</a></li>
+        <li class="has-sub"><span class="rf-label">More</span><button class="rf-chev" type="button" aria-expanded="false" aria-controls="foot-sub-7" aria-label="More More pages"><svg viewBox="0 0 16 11" aria-hidden="true"><path d="M8 10.5L16 1.86193L14.7387 0.5L8 7.77613L1.26133 0.499999L0 1.86193L8 10.5Z"/></svg></button><ul class="rf-sub" id="foot-sub-7"><li><a href="https://www.restoreny.org/our-history">Our History</a></li><li><a href="https://www.restoreny.org/about-us">About Us</a></li></ul></li>
+    </ul>
+  </div>
+  <div class="rf-col rf-col-address">
+    <h6>Our Address</h6>
+    <p class="rf-address">201 Main Street<br>Boonville, NY 13309<br><br>Find us on the underground<span class="rf-wrap"><br></span> railroad<br><br><a href="mailto:info@restoreny.org">info@restoreny.org</a></p>
+    <h6 class="rf-news-title">Don&rsquo;t Miss An Update</h6>
+    <!-- Shown as on restoreny.org; not connected to a mailing list here. -->
+    <form class="rf-news" aria-label="Newsletter">
+      <input class="rf-line" type="email" placeholder="Enter your email" aria-label="Email">
+      <label class="rf-check"><input type="checkbox" required><span>I want to subscribe to your newsletter.*</span></label>
+      <button class="rf-pill" type="submit">Subscribe</button>
+    </form>
+  </div>
+  <div class="rf-col rf-col-message">
+    <h6>Leave Your Message Here</h6>
+    <!-- Shown as on restoreny.org; not connected to an inbox here. -->
+    <form class="rf-form" aria-label="Leave your message">
+      <label for="rf-first">First name *</label><input class="rf-line" id="rf-first" type="text" required>
+      <label for="rf-last">Last name</label><input class="rf-line" id="rf-last" type="text">
+      <label for="rf-email">Email *</label><input class="rf-line" id="rf-email" type="email" required>
+      <label for="rf-msg">Your Message (optional)</label><textarea class="rf-line" id="rf-msg"></textarea>
+      <button class="rf-pill" type="submit">Submit</button>
+    </form>
+  </div>
+  <ul class="rf-social">
+        <li><a href="https://www.facebook.com/Restore-Forward-104322294603425/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="fill" d="M13.6 21v-7.6h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.1H7.9v3h2.6V21z"/></svg></a></li>
+        <li><a href="https://www.instagram.com/restoreforward/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.8"/><circle cx="12" cy="12" r="3.9"/><circle class="fill" cx="17.1" cy="6.9" r="1.1"/></svg></a></li>
+        <li><a href="https://www.youtube.com/@restoreforward" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><rect class="fill" x="2.5" y="6" width="19" height="12" rx="3.6"/><path class="cut" d="M10.2 9.2v5.6l4.8-2.8z"/></svg></a></li>
+        <li><a href="https://twitter.com/restorefwdny" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h3.5l10.5 15h-3.5z"/><path d="M18.7 4.5l-6 6.9M11.3 13.2l-6 6.3"/></svg></a></li>
+        <li><a href="https://www.linkedin.com/company/restoreforward/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><circle class="fill" cx="6.6" cy="6.7" r="1.7"/><rect class="fill" x="5.1" y="9.4" width="3" height="9.6"/><path class="fill" d="M10.7 9.4h2.9v1.3c.5-.9 1.6-1.6 3-1.6 2.7 0 3.2 1.8 3.2 4V19h-3v-5.2c0-1.2-.2-2.2-1.5-2.2s-1.7 1-1.7 2.2V19h-2.9z"/></svg></a></li>
+  </ul>
+</footer>
+
+<script>
+  /* Restore Forward's menus: the arrows fold sub-pages open, in the header, the phone
+     menu and the footer alike; the phone menu opens full screen and closes on a link,
+     the close button or Escape. */
+  (function(){
+    document.querySelectorAll('.rf-chev').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        var li = btn.closest('.has-sub'), open = !li.classList.contains('open');
+        li.parentElement.querySelectorAll(':scope > .has-sub.open').forEach(function(o){
+          if(o !== li){ o.classList.remove('open'); o.querySelector('.rf-chev').setAttribute('aria-expanded', 'false'); }
+        });
+        li.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', open);
+      });
+    });
+    document.addEventListener('click', function(e){
+      if(e.target.closest('.rf-nav')) return;
+      document.querySelectorAll('.rf-nav .has-sub.open').forEach(function(o){ o.classList.remove('open'); o.querySelector('.rf-chev').setAttribute('aria-expanded', 'false'); });
+    });
+    var menu = document.getElementById('rf-menu'), toggle = document.querySelector('.rf-toggle'), close = document.querySelector('.rf-menu-close');
+    function set(open){
+      menu.classList.toggle('open', open);
+      document.documentElement.classList.toggle('rf-menu-open', open);
+      toggle.setAttribute('aria-expanded', open);
+      if(open){ close.focus(); } else { toggle.focus(); }
+    }
+    toggle.addEventListener('click', function(){ set(true); });
+    close.addEventListener('click', function(){ set(false); });
+    menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ set(false); }); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && menu.classList.contains('open')) set(false); });
+    /* The forms are shown as on restoreny.org but are not connected here. */
+    document.querySelectorAll('.rf-footer form').forEach(function(f){ f.addEventListener('submit', function(e){ e.preventDefault(); }); });
+  })();
+</script>
+<script>
+  /* Parallax on the photograph of the roots. */
+  (function(){
+    var els = [].slice.call(document.querySelectorAll('.px'));
+    if(!els.length || !window.requestAnimationFrame) return;
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var queued = false;
+    function update(){
+      queued = false;
+      var vh = window.innerHeight;
+      els.forEach(function(el){
+        var r = el.getBoundingClientRect();
+        if(r.bottom < 0 || r.top > vh) return;
+        var p = (r.top + r.height / 2 - vh / 2) / ((vh + r.height) / 2);
+        el.style.setProperty('--px', Math.max(-1, Math.min(1, p)).toFixed(4));
+      });
+    }
+    function queue(){ if(!queued){ queued = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', queue, {passive:true});
+    window.addEventListener('resize', queue);
+    update();
+  })();
+</script>
+<script>
+  /* Reveal on entry, once per section; every failure path leaves the content visible. */
+  (function(){
+    var root = document.documentElement;
+    if(!root.classList.contains('anim')) return;
+    function showAll(){ root.classList.remove('anim'); }
+    if(!('IntersectionObserver' in window)){ showAll(); return; }
+    try{
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+        });
+      }, {rootMargin:'0px 0px -10% 0px', threshold:0.08});
+      document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+      setTimeout(function(){
+        document.querySelectorAll('.rv:not(.in)').forEach(function(el){
+          if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in');
+        });
+      }, 2500);
+    }catch(e){ showAll(); }
+  })();
+</script>
+</body>
+</html>
