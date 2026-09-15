@@ -615,9 +615,10 @@ footer .fcredit{max-width:none; font-size:1.125rem}
 
 /* ============ Restore Forward's header and footer, as on restoreny.org ============
    Measured on the live site. Its desktop layout is drawn on a 1280px canvas that
-   scales with the window (--u is one canvas pixel, never more than a real pixel);
-   phones use a 320px canvas (--m, up to its size on a 390px phone). */
-:root{--u:min(1px, calc(100vw / 1280)); --m:min(1.21875px, calc(100vw / 320)); --rf-sub:#D9E2FC}
+   scales with the window in both directions, as Wix does: at 1440px everything is
+   12.5% larger (--u is one canvas pixel); phones use a 320px canvas (--m, up to its
+   size on a 390px phone). */
+:root{--u:calc(100vw / 1280); --m:min(calc(100vw / 320), 2.1875px); --rf-sub:#D9E2FC}
 
 /* ---- header: pinned, logo lockup, menu with its dropdowns, the Donate pill ---- */
 .rf-header{position:sticky; top:0; z-index:50; display:flex; align-items:center; height:calc(75.9 * var(--u)); padding:0 calc(16.9 * var(--u)) 0 calc(9.7 * var(--u)); background:var(--slate)}
@@ -705,22 +706,23 @@ footer .fcredit{max-width:none; font-size:1.125rem}
 .rf-social svg .fill{fill:currentColor; stroke:none}
 .rf-social svg .cut{fill:var(--cream); stroke:none}
 
-/* ---- phones: restoreny.org's mobile header, full-screen menu and stacked footer ---- */
-@media (max-width:900px){
+/* ---- phones and tablets: restoreny.org's mobile header, full-screen menu and stacked footer.
+   Wix shows this layout below 1024px and scales its 320px canvas with the window up to 700px. ---- */
+@media (max-width:1023px){
   .rf-header{height:calc(38.6 * var(--m)); padding:0}
   .rf-logo{position:absolute; left:calc(23.8 * var(--m)); top:calc(4.1 * var(--m)); margin:0}
-  .rf-logo img{width:calc(119.8 * var(--m)); height:calc(26.3 * var(--m))}
+  .rf-logo img{width:calc(120 * var(--m)); height:calc(26.7 * var(--m))}
   .rf-nav{display:none}
-  .rf-donate{position:absolute; margin:0; left:calc(180.5 * var(--m)); top:calc(6.6 * var(--m)); width:calc(68 * var(--m)); height:calc(24.6 * var(--m)); border-radius:calc(49 * var(--m)); font-size:calc(13.1 * var(--m))}
-  .rf-toggle{position:absolute; left:calc(264.2 * var(--m)); top:calc(6.6 * var(--m)); display:grid; place-items:center; width:calc(27.9 * var(--m)); height:calc(27.9 * var(--m)); padding:0; border:0; background:var(--slate); color:var(--cream); cursor:pointer}
-  .rf-toggle svg{width:calc(19 * var(--m)); height:calc(12 * var(--m)); fill:none; stroke:currentColor; stroke-width:1}
+  .rf-donate{position:absolute; margin:0; left:calc(180.5 * var(--m)); top:calc(6.3 * var(--m)); width:calc(68.3 * var(--m)); height:calc(24.6 * var(--m)); border-radius:calc(49 * var(--m)); font-size:calc(13.1 * var(--m))}
+  .rf-toggle{position:absolute; left:calc(264.4 * var(--m)); top:calc(6.3 * var(--m)); display:grid; place-items:center; width:calc(24.6 * var(--m)); height:calc(24.6 * var(--m)); padding:0; border:0; background:var(--slate); color:var(--cream); cursor:pointer}
+  .rf-toggle svg{width:100%; height:100%; fill:none; stroke:currentColor; stroke-width:0.9}
   .rf-strip{height:calc(32 * var(--m) + 2px)}
   .rf-badge{top:calc(42.5 * var(--m)); right:calc(14.5 * var(--m)); width:calc(85.5 * var(--m)); font-size:calc(16.4 * var(--m))}
 
   /* the menu: a full screen of slate with the site's sections, their sub-pages folding open */
   .rf-menu{position:fixed; inset:0; z-index:60; display:block; overflow-y:auto; padding:calc(64 * var(--m)) calc(28 * var(--m)) calc(40 * var(--m)); background:var(--slate); visibility:hidden; opacity:0; transition:opacity .3s ease, visibility 0s linear .3s}
   .rf-menu.open{visibility:visible; opacity:1; transition:opacity .3s ease}
-  .rf-menu-close{position:absolute; left:calc(264.2 * var(--m)); top:calc(6.6 * var(--m)); display:grid; place-items:center; width:calc(27.9 * var(--m)); height:calc(27.9 * var(--m)); padding:0; border:0; background:none; color:var(--cream); cursor:pointer}
+  .rf-menu-close{position:absolute; left:calc(264.4 * var(--m)); top:calc(6.3 * var(--m)); display:grid; place-items:center; width:calc(24.6 * var(--m)); height:calc(24.6 * var(--m)); padding:0; border:0; background:none; color:var(--cream); cursor:pointer}
   .rf-menu-close svg{width:calc(16 * var(--m)); height:calc(16 * var(--m)); fill:none; stroke:currentColor; stroke-width:1.2}
   .rf-menu > ul{margin:0; padding:0; list-style:none}
   .rf-menu > ul > li{padding:calc(10 * var(--m)) 0}
@@ -764,6 +766,15 @@ footer .fcredit{max-width:none; font-size:1.125rem}
   .rf-check input{width:calc(16 * var(--m)); height:calc(16 * var(--m))}
   .rf-news .rf-pill{width:calc(119 * var(--m)); height:calc(47 * var(--m)); margin:calc(21 * var(--m)) 0 0 calc(24.5 * var(--m)); font-size:calc(22 * var(--m))}
 }
+/* Between 700 and 1024px Wix keeps heights and type at their 700px size, but spreads the
+   logo, Donate and menu button across the wider window (measured at 700, 750, 768, 1000). */
+@media (min-width:701px) and (max-width:1023px){
+  .rf-header{height:max(calc(38.6 * var(--m)), calc(9.8px + 9.48vw))}
+  .rf-logo{left:calc(41.7px + 1.48vw)}
+  .rf-logo img{width:calc(42.76vw - 36.6px); height:calc(9.48vw - 8.1px)}
+  .rf-donate{left:calc(57.32vw - 6.5px); width:calc(24.36vw - 21.3px)}
+  .rf-toggle, .rf-menu-close{left:calc(87.2vw - 32.2px)}
+}
 </style>
 </head>
 <body>
@@ -783,7 +794,7 @@ footer .fcredit{max-width:none; font-size:1.125rem}
     </ul>
   </nav>
   <a class="rf-donate" href="https://blackwomensblueprint.ourpowerbase.net/civicrm/contribute/transact?reset=1&id=4" target="_blank" rel="noopener">Donate</a>
-  <button class="rf-toggle" type="button" aria-expanded="false" aria-controls="rf-menu" aria-label="Menu"><svg viewBox="0 0 19 12" aria-hidden="true"><path d="M0 .5h19M0 6h19M0 11.5h19"/></svg></button>
+  <button class="rf-toggle" type="button" aria-expanded="false" aria-controls="rf-menu" aria-label="Menu"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M3 7.95h24M3 14.75h24M3 21.55h24"/></svg></button>
 </header>
 <div class="rf-menu" id="rf-menu" role="dialog" aria-label="Menu">
   <button class="rf-menu-close" type="button" aria-label="Close menu"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 1l14 14M15 1L1 15"/></svg></button>
