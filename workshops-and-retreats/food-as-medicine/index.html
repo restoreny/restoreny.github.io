@@ -406,7 +406,7 @@ footer .fcredit{max-width:none; font-size:1.125rem}
   .anim .arc-num{clip-path:inset(-0.4em -0.4em 0 -0.4em)}   /* hides only what is below the numeral */
   .anim .arc-num > span{display:inline-block; transform:translateY(105%); transition:transform 1s var(--ease) .18s}
   .anim .arc > li.in .arc-num > span{transform:none}
-  @media (min-width:901px){
+  @media (min-width:1024px){
     .anim .arc > li:nth-child(2){transition-delay:.16s} .anim .arc > li:nth-child(2) .arc-num > span{transition-delay:.34s}
     .anim .arc > li:nth-child(3){transition-delay:.32s} .anim .arc > li:nth-child(3) .arc-num > span{transition-delay:.5s}
     .anim .arc > li:nth-child(4){transition-delay:.48s} .anim .arc > li:nth-child(4) .arc-num > span{transition-delay:.66s}
@@ -424,7 +424,7 @@ footer .fcredit{max-width:none; font-size:1.125rem}
   .anim .rv.in .clock-hand{transform:rotate(var(--deg))}
 }
 
-@media (max-width:900px){
+@media (max-width:1023px){
   .menu-toggle{
     display:grid; place-items:center; width:2.5rem; height:2.5rem; margin-left:auto; padding:0;
     border:0; background:none; color:inherit; cursor:pointer;
@@ -485,7 +485,7 @@ footer .fcredit{max-width:none; font-size:1.125rem}
   .fgrid{grid-template-columns:minmax(0,1fr)}
 }
 
-@media (prefers-reduced-motion: no-preference) and (max-width:900px){
+@media (prefers-reduced-motion: no-preference) and (max-width:1023px){
   /* The screen fades in, then the sections rise one after another and the foot last;
      closing is a single quiet fade. */
   .topnav{transition:opacity .45s var(--ease), visibility 0s linear .45s}
@@ -602,7 +602,9 @@ footer .fcredit{max-width:none; font-size:1.125rem}
 .closing .pull{margin:0; max-width:20em}
 .closing .cta-row{margin-top:2rem}
 
-@media (max-width:900px){
+/* The body switches with the header and footer, at Wix's 1024px line, so the whole page
+   changes together instead of pairing a phone header with a desktop body. */
+@media (max-width:1023px){
   .grid2{grid-template-columns:minmax(0,1fr); margin-bottom:0}
   .grid2 > *, .grid2 > :first-child{border-left:0; padding-inline:var(--gutter); padding-bottom:0}
   .grid2 > * + *{padding-top:1rem}
