@@ -605,6 +605,9 @@ footer .fcredit{max-width:none; font-size:1.125rem}
 /* The body switches with the header and footer, at Wix's 1024px line, so the whole page
    changes together instead of pairing a phone header with a desktop body. */
 @media (max-width:1023px){
+  /* Stacked, a column spans the whole window, so hold the text to the guide's measure
+     (60-75 characters) instead of letting a line run the full width. */
+  .offer{max-width:820px}
   .grid2{grid-template-columns:minmax(0,1fr); margin-bottom:0}
   .grid2 > *, .grid2 > :first-child{border-left:0; padding-inline:var(--gutter); padding-bottom:0}
   .grid2 > * + *{padding-top:1rem}
