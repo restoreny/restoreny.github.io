@@ -806,8 +806,8 @@ footer .fcredit{max-width:none; font-size:1.125rem}
     <div>
       <figure class="story-photo">
         <picture>
-          <source srcset="../../images/sunflowers.webp" type="image/webp">
-          <img src="../../images/sunflowers.jpg" alt="" width="800" height="1212" decoding="async">
+          <source type="image/webp" srcset="../../images/sunflowers-480.webp 480w, ../../images/sunflowers.webp 800w" sizes="(max-width:1023px) 100vw, 33vw">
+          <img src="../../images/sunflowers.jpg" alt="" width="800" height="1212" decoding="async" fetchpriority="high">
         </picture>
       </figure>
     </div>
