@@ -610,7 +610,10 @@ footer .fcredit{max-width:none; font-size:1.125rem}
    /our-history does: 65px above, 191px below. Symmetrical spacing would read as a divider
    between two equal things rather than as the foot of what sits above it. */
 .close-columns .grid3{border-bottom:1px solid var(--line); margin-bottom:0}
-.close-columns{padding-bottom:calc(191 * var(--u))}
+/* 191px at the 1280 canvas, and no more. The reference lets this grow with the window — at
+   2000px wide its gap is 298px — but a third of a screen of nothing is too much to inherit,
+   and this site already caps its display type past 1280 for the same reason. */
+.close-columns{padding-bottom:min(calc(191 * var(--u)), 191px)}
 
 @media (max-width:1023px){
   /* Stacked, a column spans the whole window, so hold the text to the guide's measure
