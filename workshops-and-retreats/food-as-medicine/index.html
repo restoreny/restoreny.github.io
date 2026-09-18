@@ -610,10 +610,11 @@ footer .fcredit{max-width:none; font-size:1.125rem}
    /our-history does: 65px above, 191px below. Symmetrical spacing would read as a divider
    between two equal things rather than as the foot of what sits above it. */
 .close-columns .grid3{border-bottom:1px solid var(--line); margin-bottom:0}
-/* 191px at the 1280 canvas, and no more. The reference lets this grow with the window — at
-   2000px wide its gap is 298px — but a third of a screen of nothing is too much to inherit,
-   and this site already caps its display type past 1280 for the same reason. */
-.close-columns{padding-bottom:min(calc(191 * var(--u)), 191px)}
+/* Half the reference's gap, capped so it never grows past the 1280 canvas. Measured in ink
+   rather than boxes — a 110px Cormorant heading carries ~40px of empty leading above its
+   capitals — restoreny.org leaves 313px of white here at a 2000px window and this page left
+   231px. Both read as a hole in the page. 96px lands at about 130px of visible white. */
+.close-columns{padding-bottom:min(calc(96 * var(--u)), 96px)}
 
 @media (max-width:1023px){
   /* Stacked, a column spans the whole window, so hold the text to the guide's measure
