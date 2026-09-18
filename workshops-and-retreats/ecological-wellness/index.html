@@ -606,7 +606,11 @@ footer .fcredit{max-width:none; font-size:1.125rem}
    changes together instead of pairing a phone header with a desktop body. */
 /* Where no change of band colour follows the section, the column dividers are closed with a
    rule across the foot of the grid, so they end on something rather than in open space. */
-.close-columns .grid3{border-bottom:1px solid var(--line)}
+/* The rule hugs the columns it closes and leaves a long breath before the next section, as
+   /our-history does: 65px above, 191px below. Symmetrical spacing would read as a divider
+   between two equal things rather than as the foot of what sits above it. */
+.close-columns .grid3{border-bottom:1px solid var(--line); margin-bottom:0}
+.close-columns{padding-bottom:calc(191 * var(--u))}
 
 @media (max-width:1023px){
   /* Stacked, a column spans the whole window, so hold the text to the guide's measure
