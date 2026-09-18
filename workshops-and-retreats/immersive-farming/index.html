@@ -604,6 +604,10 @@ footer .fcredit{max-width:none; font-size:1.125rem}
 
 /* The body switches with the header and footer, at Wix's 1024px line, so the whole page
    changes together instead of pairing a phone header with a desktop body. */
+/* Where no change of band colour follows the section, the column divider has nothing to close
+   it, so it is not drawn at all. */
+.open-columns .grid3 > *{border-left:0}
+
 @media (max-width:1023px){
   /* Stacked, a column spans the whole window, so hold the text to the guide's measure
      (60-75 characters) instead of letting a line run the full width. */
@@ -797,7 +801,7 @@ footer .fcredit{max-width:none; font-size:1.125rem}
 <div class="rf-strip" aria-hidden="true"></div>
 <a class="rf-badge" href="https://calendly.com/outreach-blueprintny/30min" target="_blank" rel="noopener">Book a<br>Consult</a>
 
-<section class="rv band" id="top">
+<section class="rv band open-columns" id="top">
   <h1 class="title title-h1">Immersive<br>Farming</h1>
   <p class="heading">Healing Begins in the Soil</p>
   <hr class="rule">

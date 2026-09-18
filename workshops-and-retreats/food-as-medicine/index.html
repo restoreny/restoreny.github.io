@@ -604,6 +604,10 @@ footer .fcredit{max-width:none; font-size:1.125rem}
 
 /* The body switches with the header and footer, at Wix's 1024px line, so the whole page
    changes together instead of pairing a phone header with a desktop body. */
+/* Where no change of band colour follows the section, the column divider has nothing to close
+   it, so it is not drawn at all. */
+.open-columns .grid3 > *{border-left:0}
+
 @media (max-width:1023px){
   /* Stacked, a column spans the whole window, so hold the text to the guide's measure
      (60-75 characters) instead of letting a line run the full width. */
